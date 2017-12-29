@@ -1,0 +1,23 @@
+{
+  "name": "drg-shitpostgen",
+  "version": "1.0.0",
+  "description": "A web server created to send you random shitposts through HTTP requests. More of a training than anything.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dragoteryx/drg-shitpostgen.git"
+  },
+  "keywords": [
+    "shitpost"
+  ],
+  "author": "Dragoteryx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dragoteryx/drg-shitpostgen/issues"
+  },
+  "homepage": "https://github.com/Dragoteryx/drg-shitpostgen#readme"
+}
