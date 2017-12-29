@@ -65,7 +65,7 @@ function firstCharUpper(string) {
 
 // WEBSERVER
 http.createServer((req, res) => {
-  res.writeHead(200, {"Content-Type": "text/html"});
+  res.writeHead(200, {"Content-Type": "text/plain"});
 	let q = url.parse(req.url, true).query;
 	console.log("Connexion");
 	if (q.query === undefined) {
