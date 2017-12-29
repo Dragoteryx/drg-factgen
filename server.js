@@ -2,6 +2,7 @@
 
 const http = require("http");
 const url = require("url");
+require("dotenv").config();
 
 // SHITPOSTING RELATED FUNCTIONS
 function genShitpost() {
@@ -82,7 +83,7 @@ http.createServer((req, res) => {
 		})
 
 	}
-}).listen(80);
+}).listen(process.env.PORT);
 console.log("OK");
 
 // DATABASE
