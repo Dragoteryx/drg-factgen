@@ -523,7 +523,7 @@ let database = [
 		]
 	},
 	{
-		name: "town",
+		name: "ville",
 		strings: [
 			"Paris",
 			"London",
