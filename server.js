@@ -19,7 +19,7 @@ function genShitpost() {
 function findShitpost(strings) {
 	let done = false;
 	let shitpost;
-	for (let i = 0; i < 50000 && !done; i++) {
+	for (let i = 0; i < 50000 &&!done; i++) {
 		shitpost = genShitpost();
 		console.log("Shitpost " + i + ": " + shitpost);
 		done = stringContainsAllArray(shitpost, strings);
@@ -99,8 +99,8 @@ let database = [
 			"Some rumors at $entr say that $end.",
 			"According to $name, $end.",
 			"I bet you $item that $end.",
-			"You thought it was $name, but it was me, Dio !",
-			"Look up in the sky ! It's a bird ! It's a plane ! It's $name !",
+			"You thought it was $name, but it was me, Dio!",
+			"Look up in the sky! It's a bird! It's a plane! It's $name!",
 			"I was told by $name that $end.",
 			"It would be so cool if $event didn't happen.",
 			"I'm wondering how the world would be if $event did not happen.",
@@ -313,7 +313,8 @@ let database = [
 			"Bourbon",
 			"Khan",
 			"Ulman",
-			"a Nosalis"
+			"a nosalis",
+			"Abradolf Lincler"
 		]
 	},
 	{
