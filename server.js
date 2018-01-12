@@ -308,7 +308,12 @@ let database = [
 			"your shitty waifu",
 			"Kung Fury",
 			"Paarthurnax",
-			"the President of the United States"
+			"the President of the United States",
+			"Artyom",
+			"Bourbon",
+			"Khan",
+			"Ulman",
+			"a Nosalis"
 		]
 	},
 	{
@@ -379,7 +384,8 @@ let database = [
 			"squirrels",
 			"jews",
 			"the employees of $entr",
-			"nazis"
+			"nazis",
+			"the Dark Ones"
 		]
 	},
 	{
@@ -399,7 +405,11 @@ let database = [
 			"Wayne Enterprise",
 			"the Ku Klux Klan",
 			"the KKK",
-			"the DrG Company"
+			"the DrG Company",
+			"Hansa",
+			"the Red Line",
+			"the Fourth Reich",
+			"Polis"
 		]
 	},
 	{
@@ -419,7 +429,8 @@ let database = [
 			"in the ISS",
 			"behind you",
 			"in $pays",
-			"in $ville"
+			"in $ville",
+			"in the metro"
 		]
 	},
 	{
@@ -466,7 +477,8 @@ let database = [
 			"$name's penis",
 			"$game",
 			"a cup of $drink",
-			"the Death Note"
+			"the Death Note",
+			"Bourbon's Kalash"
 		]
 	},
 	{
@@ -519,7 +531,9 @@ let database = [
 			"North Korea",
 			"Japan",
 			"China",
-			"India"
+			"India",
+			"Russia",
+			"USRR"
 		]
 	},
 	{
@@ -533,6 +547,7 @@ let database = [
 			"Dublin",
 			"Berlin",
 			"Auschwitz",
+			"Moscow"
 		]
 	},
 	{
