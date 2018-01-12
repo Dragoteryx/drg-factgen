@@ -55,6 +55,7 @@ http.createServer((req, res) => {
 	} else {
 		console.log("Requesting shitpost corresponding to: " + q.query);
 		findShitpost(q.query.split("_")).then(shitpost => {
+			console.log("Shitpost: " + shitpost);
 			res.end(shitpost);
 		}).catch(err => {
 			console.log("Shitpost not found");
