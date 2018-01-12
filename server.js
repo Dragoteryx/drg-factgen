@@ -19,7 +19,7 @@ function genShitpost() {
 function findShitpost(strings) {
 	let done = false;
 	let shitpost;
-	for (let i = 0; i < 50000 &&!done; i++) {
+	for (let i = 0; i < 50000 && !done; i++) {
 		shitpost = genShitpost();
 		//console.log("Shitpost " + i + ": " + shitpost);
 		done = stringContainsAllArray(shitpost, strings);
