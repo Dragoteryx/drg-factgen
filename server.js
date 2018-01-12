@@ -407,7 +407,7 @@ let database = [
 			"the Ku Klux Klan",
 			"the KKK",
 			"the DrG Company",
-			"Hansa",
+			"Hanza",
 			"the Red Line",
 			"the Fourth Reich",
 			"Polis"
