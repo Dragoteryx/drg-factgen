@@ -21,11 +21,12 @@ function findShitpost(strings) {
 	let shitpost;
 	for (let i = 0; i < 50000 &&!done; i++) {
 		shitpost = genShitpost();
-		console.log("Shitpost " + i + ": " + shitpost);
+		//console.log("Shitpost " + i + ": " + shitpost);
 		done = stringContainsAllArray(shitpost, strings);
-	} if (done)
-		return Promise.resolve(shitpost);
-	return Promise.reject("shitpostNotFound");
+	} if (!done)
+		return Promise.reject("shitpostNotFound");
+	return Promise.resolve(shitpost);
+
 }
 
 // OTHER FUNCTIONS
