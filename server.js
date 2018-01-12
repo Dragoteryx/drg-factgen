@@ -465,7 +465,8 @@ let database = [
 			"the DeLorean",
 			"$name's penis",
 			"$game",
-			"a cup of $drink"
+			"a cup of $drink",
+			"the Death Note"
 		]
 	},
 	{
