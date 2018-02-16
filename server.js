@@ -26,9 +26,9 @@ function findShitpost(strings) {
 			done = stringContainsAllArray(shitpost, strings);
 		}
 		if (done)
-			resolve({text: shitpost, tries: i});
+			resolve({text: shitpost, tries: i, found: true});
 		else
-			resolve({text: null, tries: i});
+			resolve({text: null, tries: i, found: false});
 	});
 }
 
@@ -49,12 +49,12 @@ function firstCharUpper(string) {
 http.createServer((req, res) => {
   res.writeHead(200, {"Content-Type": "text/plain"});
 	let q = url.parse(req.url, true).query;
+	let now = Date.now();
 	if (q.query === undefined)
-  	res.end(JSON.stringify({shitpost: genShitpost(), duration: 0, found: true, tries: 1}));
+  	res.end(JSON.stringify({shitpost: genShitpost(), duration: (Date.now() - now), found: true, tries: 1}));
 	else {
-		let now = Date.now();
 		findShitpost(q.query.split("_")).then(shitpost => {
-			res.end(JSON.stringify({shitpost: shitpost.text, duration: (Date.now() - now), found: true, tries: shitpost.tries}));
+			res.end(JSON.stringify({shitpost: shitpost.text, duration: (Date.now() - now), found: shitpost.found, tries: shitpost.tries}));
 		});
 	}
 }).listen(process.env.PORT);
