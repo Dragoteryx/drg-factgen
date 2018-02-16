@@ -9,8 +9,7 @@ function genShitpost() {
 	let texte = "$begin";
 	let constName = randTab(database[2].strings);
 	for (let i = 0; i < 15; i++) {
-		texte = texte
-		.replace("$cname", constName);
+		texte = texte.replace("$cname", constName);
 		for (let data of database)
 			texte = texte.replace("$" + data.name, randTab(data.strings));
 	}
@@ -20,12 +19,16 @@ function genShitpost() {
 function findShitpost(strings) {
 	return new Promise((resolve, reject) => {
 		let done = false;
-		for (let i = 0; i < 50000 && !done; i++)
-			done = stringContainsAllArray(genShitpost(), strings);
+		let shitpost;
+		let i = 1;
+		for (i; i < 100000 && !done; i++) {
+			shitpost = genShitpost();
+			done = stringContainsAllArray(shitpost, strings);
+		}
 		if (done)
-			resolve(shitpost);
+			resolve({text: shitpost, tries: i});
 		else
-			reject();
+			resolve({text: null, tries: i});
 	});
 }
 
@@ -47,13 +50,11 @@ http.createServer((req, res) => {
   res.writeHead(200, {"Content-Type": "text/plain"});
 	let q = url.parse(req.url, true).query;
 	if (q.query === undefined)
-  	res.end(JSON.stringify({shitpost: genShitpost(), duration: 0, found: true}));
+  	res.end(JSON.stringify({shitpost: genShitpost(), duration: 0, found: true, tries: 1}));
 	else {
 		let now = Date.now();
 		findShitpost(q.query.split("_")).then(shitpost => {
-			res.end(JSON.stringify({shitpost: shitpost, duration: (Date.now() - now), found: true}));
-		}).catch(() => {
-			res.end(JSON.stringify({shitpost: null, duration: (Date.now() - now), found: false}));
+			res.end(JSON.stringify({shitpost: shitpost.text, duration: (Date.now() - now), found: true, tries: shitpost.tries}));
 		});
 	}
 }).listen(process.env.PORT);
