@@ -16,17 +16,17 @@ function genShitpost() {
 	}
 	return firstCharUpper(texte);
 }
-function findShitpost(strings) {
-	let done = false;
-	let shitpost;
-	for (let i = 0; i < 50000 && !done; i++) {
-		shitpost = genShitpost();
-		//console.log("Shitpost " + i + ": " + shitpost);
-		done = stringContainsAllArray(shitpost, strings);
-	} if (!done)
-		return Promise.reject("shitpostNotFound");
-	return Promise.resolve(shitpost);
 
+function findShitpost(strings) {
+	return new Promise((resolve, reject) => {
+		let done = false;
+		for (let i = 0; i < 50000 && !done; i++)
+			done = stringContainsAllArray(genShitpost(), strings);
+		if (done)
+			resolve(shitpost);
+		else
+			reject();
+	});
 }
 
 // OTHER FUNCTIONS
@@ -46,22 +46,15 @@ function firstCharUpper(string) {
 http.createServer((req, res) => {
   res.writeHead(200, {"Content-Type": "text/plain"});
 	let q = url.parse(req.url, true).query;
-	console.log("Connexion");
-	if (q.query === undefined) {
-		console.log("Requesting random shitpost");
-		let shitpost = genShitpost();
-		console.log("Shitpost: " + shitpost);
-  	res.end(shitpost);
-	} else {
-		console.log("Requesting shitpost corresponding to: " + q.query);
+	if (q.query === undefined)
+  	res.end(JSON.stringify({shitpost: genShitpost(), duration: 0, found: true}));
+	else {
+		let now = Date.now();
 		findShitpost(q.query.split("_")).then(shitpost => {
-			console.log("Shitpost: " + shitpost);
-			res.end(shitpost);
-		}).catch(err => {
-			console.log("Shitpost not found");
-			res.end("shitpostGenerationError");
-		})
-
+			res.end(JSON.stringify({shitpost: shitpost, duration: (Date.now() - now), found: true}));
+		}).catch(() => {
+			res.end(JSON.stringify({shitpost: null, duration: (Date.now() - now), found: false}));
+		});
 	}
 }).listen(process.env.PORT);
 
