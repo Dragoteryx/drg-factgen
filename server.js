@@ -5,6 +5,15 @@ const url = require("url");
 require("dotenv").config();
 
 // SHITPOSTING RELATED FUNCTIONS
+function checkDatabase(string) {
+	for (let data of database) {
+		for (let dstring of data.strings) {
+			if (dstring.toLowerCase().includes(string.toLowerCase()))
+				return true;
+		}
+	}
+	return false;
+}
 function genShitpost() {
 	let texte = "$begin";
 	let constName = randTab(database[2].strings);
@@ -18,6 +27,12 @@ function genShitpost() {
 
 function findShitpost(strings) {
 	return new Promise((resolve, reject) => {
+		for (let string of strings) {
+			if (!checkDatabase(string)) {
+				resolve({text: null, tries: 0, found: false});
+				return;
+			}
+		}
 		let done = false;
 		let shitpost;
 		let i = 1;
