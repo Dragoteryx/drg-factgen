@@ -40,7 +40,7 @@ function findShitpost(strings) {
 		let done = false;
 		let shitpost;
 		let i = 1;
-		for (i; i < 500000 && !done; i++) {
+		for (i; i < 150000 && !done; i++) {
 			shitpost = genShitpost();
 			done = stringContainsAllArray(shitpost, strings);
 		}
