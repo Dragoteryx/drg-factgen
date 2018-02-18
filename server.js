@@ -2,7 +2,11 @@
 
 const http = require("http");
 const url = require("url");
+const cp = require("child_process");
 require("dotenv").config();
+
+// VARIABLES
+const child = process.argv.includes("shitpostChild");
 
 // SHITPOSTING RELATED FUNCTIONS
 function checkDatabase(string) {
@@ -26,7 +30,7 @@ function genShitpost() {
 }
 
 function findShitpost(strings) {
-	return new Promise((resolve, reject) => {
+	return new Promise(resolve => {
 		for (let string of strings) {
 			if (!checkDatabase(string)) {
 				resolve({text: null, tries: 0, found: false});
@@ -36,7 +40,7 @@ function findShitpost(strings) {
 		let done = false;
 		let shitpost;
 		let i = 1;
-		for (i; i < 100000 && !done; i++) {
+		for (i; i < 3000000 && !done; i++) {
 			shitpost = genShitpost();
 			done = stringContainsAllArray(shitpost, strings);
 		}
@@ -60,19 +64,34 @@ function firstCharUpper(string) {
 	return string[0].toUpperCase() + string.slice(1);
 }
 
-// WEBSERVER
-http.createServer((req, res) => {
-  res.writeHead(200, {"Content-Type": "text/plain"});
-	let q = url.parse(req.url, true).query;
-	let now = Date.now();
-	if (q.query === undefined)
-  	res.end(JSON.stringify({shitpost: genShitpost(), duration: (Date.now() - now), found: true, tries: 1}));
-	else {
-		findShitpost(q.query.split("_")).then(shitpost => {
-			res.end(JSON.stringify({shitpost: shitpost.text, duration: (Date.now() - now), found: shitpost.found, tries: shitpost.tries}));
+// WEBSERVER IF PARENT, FINDING SHITPOST IF CHILD
+if (!child) {
+	http.createServer((req, res) => {
+	  res.writeHead(200, {"Content-Type": "application/json"});
+		let q = url.parse(req.url, true).query;
+		let now = Date.now();
+		if (q.query === undefined)
+	  	res.end(JSON.stringify({shitpost: genShitpost(), duration: (Date.now() - now), found: true, tries: 1}));
+		else {
+			let child = cp.fork("./server.js", ["shitpostChild"]);
+			child.on("message", shitpost => {
+				res.end(JSON.stringify({shitpost: shitpost.text, duration: (Date.now() - now), found: shitpost.found, tries: shitpost.tries}));
+				child.kill();
+			});
+			child.on("close", () => {
+				console.log("Child killed");
+			})
+			child.send(q.query);
+		}
+	}).listen(process.env.PORT);
+} else {
+	process.on("message", query => {
+		findShitpost(query.split("_")).then(shitpost => {
+			process.send(shitpost);
 		});
-	}
-}).listen(process.env.PORT);
+	})
+}
+
 
 // DATABASE
 let database = [
@@ -645,4 +664,4 @@ let database = [
 	}
 ]
 
-console.log("OK => " + genShitpost());
+console.log(child ? "Child process ready!" : "Parent process ready!");
