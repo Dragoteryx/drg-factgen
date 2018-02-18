@@ -1,7 +1,7 @@
 {
   "name": "drg-shitpostgen",
   "version": "2.0.0",
-  "description": "A web server created to send you random shitposts through HTTP requests. More of a training than anything.",
+  "description": "A web server created to send you random facts. More of a training than anything.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
