@@ -117,7 +117,7 @@ let database = [
 			"someone told me that $end.",
 			"$name, our lord and savior, told me that $end.",
 			"meanwhile, in a parallel universe, $end.",
-			"tt is written that only $end.",
+			"it is written that only $end.",
 			"just a daily reminder that $end.",
 			"I'm coming from the future to tell you that $end.",
 			"how come $end?",
