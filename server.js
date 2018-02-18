@@ -80,7 +80,7 @@ if (!child) {
 			});
 			child.on("close", () => {
 				console.log("Child killed");
-			})
+			});
 			child.send(q.query);
 		}
 	}).listen(process.env.PORT);
@@ -98,47 +98,47 @@ let database = [
 	{
 		name: "begin",
 		strings: [
-			"My Senpai told me that $end.",
-			"Did you know that $end?",
-			"Thanks to science, we now know that $end.",
+			"my Senpai told me that $end.",
+			"did you know that $end?",
+			"thanks to science, we now know that $end.",
 			"I wanted to tell you that $end.",
-			"You might not believe me, but $end.",
+			"you might not believe me, but $end.",
 			"I'm almost certain that $end.",
 			"I think $end.",
-			"Listen : $end.",
-			"You are not forced to agree with me, but $end.",
+			"listen : $end.",
+			"you are not forced to agree with me, but $end.",
 			"I'm pleased to tell you that $end.",
 			"I'm sorry to inform you that $end.",
-			"To be honest, I think $end.",
-			"According to Fox News, $end.",
-			"According to the police, $end.",
-			"Some rumors say that $end.",
-			"An ancient prophecy tells that $end.",
-			"Someone told me that $end.",
-			"Gaben, our lord and savior, told me that $end.",
-			"Meanwhile, in a parallel universe, $end.",
-			"It is written that only $end.",
-			"Just a daily reminder that $end.",
+			"to be honest, I think $end.",
+			"according to Fox News, $end.",
+			"according to the police, $end.",
+			"some rumors say that $end.",
+			"an ancient prophecy tells that $end.",
+			"someone told me that $end.",
+			"$name, our lord and savior, told me that $end.",
+			"meanwhile, in a parallel universe, $end.",
+			"tt is written that only $end.",
+			"just a daily reminder that $end.",
 			"I'm coming from the future to tell you that $end.",
-			"How come $end?",
-			"This is absolute truth : $end.",
-			"You can't deny that $end.",
-			"You can't disagree with me when I say that $end.",
-			"This is truth : $end.",
-			"Somehow, $end.",
-			"Some rumors at $entr say that $end.",
-			"According to $name, $end.",
+			"how come $end?",
+			"this is absolute truth : $end.",
+			"you can't deny that $end.",
+			"you can't disagree with me when I say that $end.",
+			"this is truth : $end.",
+			"somehow, $end.",
+			"some rumors at $entr say that $end.",
+			"according to $name, $end.",
 			"I bet you $item that $end.",
-			"You thought it was $name, but it was me, Dio!",
-			"Look up in the sky! It's a bird! It's a plane! It's $name!",
+			"you thought it was $name, but it was me, Dio!",
+			"look up in the sky! It's a bird! It's a plane! It's $name!",
 			"I was told by $name that $end.",
-			"It would be so cool if $event didn't happen.",
+			"it would be so cool if $event didn't happen.",
 			"I'm wondering how the world would be if $event did not happen.",
 			"$end. Crazy, right?",
-			"Tell me that $end, or I'll murder you.",
-			"For some reason, $end.",
-			"It would be fun if $end.",
-			"Would you rather $action or $action?"
+			"tell me that $end, or I'll murder you.",
+			"for some reason, $end.",
+			"it would be fun if $end.",
+			"would you rather $action or $action?"
 		]
 	},
 	{
@@ -229,7 +229,6 @@ let database = [
 			"$movie is the best movie ever",
 			"$movie is the worst movie ever",
 			"$movie is my favorite movie",
-			"1 $cname + 1 $cname = 2 $cnames",
 			"$end, and $end"
 		]
 	},
@@ -344,7 +343,13 @@ let database = [
 			"Khan",
 			"Ulman",
 			"a nosalis",
-			"Abradolf Lincler"
+			"Abradolf Lincler",
+			"Twilight Sparkle",
+			"Rarity",
+			"Fluttershy",
+			"Rainbow Dash",
+			"Applejack",
+			"Pinkie Pie"
 		]
 	},
 	{
@@ -364,9 +369,7 @@ let database = [
 			"delicious",
 			"out",
 			"a lie",
-			"not true",
-			"gay",
-			"true"
+			"gay"
 		]
 	},
 	{
@@ -416,7 +419,9 @@ let database = [
 			"jews",
 			"the employees of $entr",
 			"nazis",
-			"the Dark Ones"
+			"the Dark Ones",
+			"bronies",
+			"furries"
 		]
 	},
 	{
@@ -460,7 +465,7 @@ let database = [
 			"in the ISS",
 			"behind you",
 			"in $pays",
-			"in $ville",
+			"in $town",
 			"in the metro"
 		]
 	},
@@ -509,7 +514,8 @@ let database = [
 			"$game",
 			"a cup of $drink",
 			"the Death Note",
-			"Bourbon's Kalash"
+			"Bourbon's Kalash",
+			"the Elements of Harmony"
 		]
 	},
 	{
@@ -578,7 +584,9 @@ let database = [
 			"Dublin",
 			"Berlin",
 			"Auschwitz",
-			"Moscow"
+			"Moscow",
+			"Ponyville",
+			"Canterlot"
 		]
 	},
 	{

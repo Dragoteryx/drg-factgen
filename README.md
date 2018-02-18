@@ -1,1 +1,1 @@
-# drg-shitpostGenerator
+# drg-factgenerator
