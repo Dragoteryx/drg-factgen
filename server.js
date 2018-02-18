@@ -1,14 +1,14 @@
 "use strict";
 
+require("dotenv").config();
 const http = require("http");
 const url = require("url");
 const cp = require("child_process");
-require("dotenv").config();
 
 // VARIABLES
-const child = process.argv.includes("shitpostChild");
+const child = process.argv.includes("factChild");
 
-// SHITPOSTING RELATED FUNCTIONS
+// FACTS RELATED FUNCTIONS
 function checkDatabase(string) {
 	for (let data of database) {
 		for (let dstring of data.strings) {
@@ -18,7 +18,7 @@ function checkDatabase(string) {
 	}
 	return false;
 }
-function genShitpost() {
+function genFact() {
 	let texte = "$begin";
 	let constName = randTab(database[2].strings);
 	for (let i = 0; i < 15; i++) {
@@ -29,7 +29,7 @@ function genShitpost() {
 	return firstCharUpper(texte);
 }
 
-function findShitpost(strings) {
+function findFact(strings) {
 	return new Promise(resolve => {
 		for (let string of strings) {
 			if (!checkDatabase(string)) {
@@ -38,14 +38,14 @@ function findShitpost(strings) {
 			}
 		}
 		let done = false;
-		let shitpost;
+		let fact;
 		let i = 1;
 		for (i; i < 100000 && !done; i++) {
-			shitpost = genShitpost();
-			done = stringContainsAllArray(shitpost, strings);
+			fact = genFact();
+			done = stringContainsAllArray(fact, strings);
 		}
 		if (done)
-			resolve({text: shitpost, tries: i, found: true});
+			resolve({text: fact, tries: i, found: true});
 		else
 			resolve({text: null, tries: i, found: false});
 	});
@@ -64,18 +64,18 @@ function firstCharUpper(string) {
 	return string[0].toUpperCase() + string.slice(1);
 }
 
-// WEBSERVER IF PARENT, FINDING SHITPOST IF CHILD
+// WEBSERVER IF PARENT, FINDING FACT IF CHILD
 if (!child) {
 	http.createServer((req, res) => {
 	  res.writeHead(200, {"Content-Type": "application/json"});
 		let q = url.parse(req.url, true).query;
 		let now = Date.now();
 		if (q.query === undefined)
-	  	res.end(JSON.stringify({shitpost: genShitpost(), duration: (Date.now() - now), found: true, tries: 1}));
+	  	res.end(JSON.stringify({fact: genFact(), duration: (Date.now() - now), found: true, tries: 1}));
 		else {
-			let child = cp.fork("./server.js", ["shitpostChild"]);
-			child.on("message", shitpost => {
-				res.end(JSON.stringify({shitpost: shitpost.text, duration: (Date.now() - now), found: shitpost.found, tries: shitpost.tries}));
+			let child = cp.fork("./server.js", ["factChild"]);
+			child.on("message", fact => {
+				res.end(JSON.stringify({fact: fact.text, duration: (Date.now() - now), found: fact.found, tries: fact.tries}));
 				child.kill();
 			});
 			child.on("close", () => {
@@ -86,8 +86,8 @@ if (!child) {
 	}).listen(process.env.PORT);
 } else {
 	process.on("message", query => {
-		findShitpost(query.split("_")).then(shitpost => {
-			process.send(shitpost);
+		findFact(query.split("_")).then(fact => {
+			process.send(fact);
 		});
 	})
 }
@@ -287,7 +287,7 @@ let database = [
 			"a bird",
 			"a shark",
 			"a nazi",
-			"a shitposter",
+			"a facter",
 			"a bitch",
 			"a bot",
 			"a vampire",
