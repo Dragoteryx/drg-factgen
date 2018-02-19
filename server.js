@@ -71,11 +71,11 @@ if (!child) {
 		let q = url.parse(req.url, true).query;
 		let now = Date.now();
 		if (q.query === undefined)
-	  	res.end(JSON.stringify({fact: genFact(), duration: (Date.now() - now), found: true, tries: 1}));
+	  	res.end(JSON.stringify({fact: genFact(), found: true, duration: (Date.now() - now), tries: 1}));
 		else {
 			let child = cp.fork("./server.js", ["factChild"]);
 			child.on("message", fact => {
-				res.end(JSON.stringify({fact: fact.text, duration: (Date.now() - now), found: fact.found, tries: fact.tries}));
+				res.end(JSON.stringify({fact: fact.text, found: fact.found, duration: (Date.now() - now), tries: fact.tries}));
 				child.kill();
 			});
 			child.on("close", () => {
