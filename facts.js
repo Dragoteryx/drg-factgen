@@ -1,5 +1,7 @@
+const redis = require("redis").createClient(process.env.REDIS_URL);
+
 // FACTS RELATED FUNCTIONS
-function checkDatabase(string) {
+function checkDatabase(database, string) {
 	for (let data of database) {
 		for (let dstring of data.strings) {
 			if (dstring.toLowerCase().includes(string.toLowerCase()))
@@ -9,7 +11,17 @@ function checkDatabase(string) {
 	return false;
 }
 
-function genFact() {
+async function genBulk(nb = 100) {
+	let database = await fetchDatabase();
+	let bulk = [];
+  for (let i = 0; i < nb; i++) {
+    bulk.push(await genFact(database));
+  }
+	return bulk;
+}
+
+async function genFact(database) {
+	if (database === undefined) database = await fetchDatabase();
 	let texte = "$begin";
 	let constName = randTab(database[2].strings);
 	for (let i = 0; i < 15; i++) {
@@ -20,26 +32,26 @@ function genFact() {
 	return firstCharUpper(texte);
 }
 
-function findFact(strings) {
-	return new Promise(resolve => {
-		for (let string of strings) {
-			if (!checkDatabase(string)) {
-				resolve({text: null, tries: 0, found: false});
-				return;
-			}
+async function findFact(strings) {
+	console.dir(strings)
+	let database = await fetchDatabase();
+	for (let string of strings) {
+		if (!checkDatabase(database, string)) {
+			return {text: null, tries: 0, found: false};
+			return;
 		}
-		let done = false;
-		let fact;
-		let i = 1;
-		for (i; i < 100000 && !done; i++) {
-			fact = genFact();
-			done = stringContainsAllArray(fact, strings);
-		}
-		if (done)
-			resolve({text: fact, tries: i, found: true});
-		else
-			resolve({text: null, tries: i, found: false});
-	});
+	}
+	let done = false;
+	let fact;
+	let i = 1;
+	for (i; i < 100000 && !done; i++) {
+		fact = await genFact(database);
+		done = stringContainsAllArray(fact, strings);
+	}
+	if (done)
+		return {text: fact, tries: i, found: true};
+	else
+		return {text: null, tries: i, found: false};
 }
 
 // OTHER FUNCTIONS
@@ -55,8 +67,29 @@ function firstCharUpper(string) {
 	return string[0].toUpperCase() + string.slice(1);
 }
 
+function provideDatabase(database) {
+	return redis.set("database", JSON.stringify(database));
+}
+
+function fetchDatabase() {
+	return new Promise((resolve, reject) => {
+		redis.get("database", (err, data) => {
+			if (err) reject(err);
+			else resolve(JSON.parse(data));
+		});
+	})
+}
+
+module.exports = {
+  genFact: genFact,
+  findFact: findFact,
+	provideDatabase: provideDatabase,
+	fetchDatabase: fetchDatabase,
+	genBulk: genBulk
+};
+
 // DATABASE
-let database = [
+/*let database = [
 	{
 		name: "begin",
 		strings: [
@@ -632,9 +665,4 @@ let database = [
 			"9"
 		]
 	}
-];
-
-module.exports = {
-  genFact: genFact,
-  findFact: findFact,
-};
+];*/
