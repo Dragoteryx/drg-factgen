@@ -7,7 +7,6 @@ const cp = require("child_process");
 const facts = require("./facts.js");
 
 http.createServer(async (req, res) => {
-
   let parsed = url.parse(req.url, true);
 	let query = parsed.query;
   let authorized = query.auth == process.env.AUTHTOKEN;
@@ -80,8 +79,8 @@ http.createServer(async (req, res) => {
       while (query.after.includes("_"))
         query.after = query.after.replace("_", " ");
       let str = JSON.stringify(database);
-      while (str.includes(before))
-        str = str.replace(before, after);
+      while (str.includes(query.before))
+        str = str.replace(query.before, query.after);
       facts.provideDatabase(JSON.parse(str));
     }
     res.writeHead(301, {Location: "/database"});

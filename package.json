@@ -1,6 +1,6 @@
 {
-  "name": "drg-shitpostgen",
-  "version": "2.0.0",
+  "name": "drg-factgen",
+  "version": "2.1.0",
   "description": "A web server created to send you random facts. More of a training than anything.",
   "main": "server.js",
   "scripts": {
