@@ -72,6 +72,16 @@ http.createServer(async (req, res) => {
     }
     res.writeHead(301, {Location: "/database"});
     res.end();
+  } else if (parsed.pathname == "/replace") {
+    if (authorized && query.before !== undefined && query.after !== undefined) {
+      let database = await facts.fetchDatabase();
+      let str = JSON.stringify(database);
+      while (str.includes(before))
+        str = str.replace(before, after);
+      facts.provideDatabase(JSON.parse(str));
+    }
+    res.writeHead(301, {Location: "/database"});
+    res.end();
   }
 }).listen(process.env.PORT);
 
