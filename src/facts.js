@@ -221,7 +221,8 @@ let saved = [
 			"$_action twice a day to $_action",
 			"$_action three times a day to $_action",
 			"when $_cname is bored, $_cname likes to $_action",
-			"$_name often tries to $_action"
+			"$_name often tries to $_action",
+			"you can buy $_item at only 399$"
 		]
 	},
 	{
@@ -342,7 +343,8 @@ let saved = [
 			"Rainbow Dash",
 			"Applejack",
 			"Pinkie Pie",
-			"someone"
+			"someone",
+			"PewDiePie"
 		]
 	},
 	{
@@ -509,7 +511,8 @@ let saved = [
 			"a cup of $_drink",
 			"the Death Note",
 			"Bourbon's Kalash",
-			"the Elements of Harmony"
+			"the Elements of Harmony",
+			"$_name's chair"
 		]
 	},
 	{
