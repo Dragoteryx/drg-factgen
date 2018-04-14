@@ -136,7 +136,8 @@ let save = [
 			"tell me that $end, or I'll murder you.",
 			"for some reason, $end.",
 			"it would be fun if $end.",
-			"would you rather $action or $action?"
+			"would you rather $action or $action?",
+			"$name told me that $end."
 		]
 	},
 	{
@@ -155,8 +156,8 @@ let save = [
 			"$name doesn't like you",
 			"$name hates you",
 			"$name loves you",
-			"$name would like $goal",
-			"$faction would like $goal",
+			"$name would like to $action",
+			"$faction would like to $action",
 			"$name has no soul",
 			"$name needs healing",
 			"$name needs $item",
@@ -165,7 +166,7 @@ let save = [
 			"$name is searching for $item",
 			"$name's treasure is hidden $loc",
 			"$name doesn't exist",
-			"$name wants $goal",
+			"$name wants to $action",
 			"$name looks better than you",
 			"$name is your master",
 			"$name is not as dumb as $name",
@@ -199,19 +200,19 @@ let save = [
 			"$name has $item",
 			"$name doesn't have $item",
 			"$name gave $item to $name",
-			"$name gave $item to $name $goal",
+			"$name gave $item to $name to $action",
 			"$name is married with $name",
 			"$name has stolen $item",
 			"$item was created by $name",
-			"$name and $name allied themselves $goal",
-			"$faction and $faction allied themselves $goal",
-			"$name and $faction allied themselves $goal",
+			"$name and $name allied themselves to $action",
+			"$faction and $faction allied themselves to $action",
+			"$name and $faction allied themselves to $action",
 			"$name came into possession of $item",
-			"$goal, you need $goal first",
-			"$name can help you $goal",
-			"$goal, you will need the help of $name",
+			"to $action, you need to $action first",
+			"$name can help you to $action",
+			"to $action, you will need the help of $name",
 			"$nb + $nb = $nb",
-			"the easiest way $goal is $goal",
+			"the easiest way to $action is to $action",
 			"$item is powered using $item",
 			"$name caused $event",
 			"$faction caused $event",
@@ -221,13 +222,19 @@ let save = [
 			"there's a museum about $food $loc",
 			"there's a museum about $drink $loc",
 			"$event happenned $loc",
-			"$name created $item $goal",
+			"$name created $item to $action",
 			"$movie is $name's favorite movie",
 			"$movie will predict the future",
 			"$movie is the best movie ever",
 			"$movie is the worst movie ever",
 			"$movie is my favorite movie",
-			"$end, and $end"
+			"$end, and $end",
+			"$name wants to $action",
+			"$action once a day to $action",
+			"$action twice a day to $action",
+			"$action three times a day to $action",
+			"when $cname is bored, $cname likes to $action",
+			"$name often tries to $action"
 		]
 	},
 	{
@@ -518,22 +525,6 @@ let save = [
 		]
 	},
 	{
-		alias: "goal",
-		strings: [
-			"to destroy $item",
-			"to find $item",
-			"to be as cool as me",
-			"to be as cool as $name",
-			"to kill you",
-			"to eat you",
-			"to kill $name",
-			"to eat $name",
-			"to kill all $group",
-			"to eat all $group",
-			"to defeat $name"
-		]
-	},
-	{
 		alias: "event",
 		strings: [
 			"the zombie apocalypse",
@@ -569,7 +560,9 @@ let save = [
 			"China",
 			"India",
 			"Russia",
-			"USRR"
+			"USRR",
+			"Poland",
+			"South Korea"
 		]
 	},
 	{
@@ -611,7 +604,10 @@ let save = [
 		strings: [
 			"SQUADALA! WE'RE OFF!",
 			"THIS IS SPARTA!",
-			"YOU SHALL NOT PASS!"
+			"YOU SHALL NOT PASS!",
+			"DEUS VULT!",
+			"FUS RO DAH!",
+			"LEEROY JENKINS!"
 		]
 	},
 	{
@@ -631,7 +627,17 @@ let save = [
 			"die",
 			"sleep",
 			"cook $food",
-			"meet $name"
+			"meet $name",
+			"invade $pays",
+			"defeat $name",
+			"destroy $item",
+			"find $item",
+			"be as cool as me",
+			"be as cool as $name",
+			"kill you",
+			"eat you",
+			"kill all $group",
+			"eat all $group"
 		]
 	},
 	{
