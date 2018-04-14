@@ -11,10 +11,6 @@ function checkDatabase(database, string) {
 	return false;
 }
 
-function fillGaps(database, str) {
-	while
-}
-
 async function genBulk(nb = 100) {
 	let database = await fetchDatabase();
 	let bulk = [];
