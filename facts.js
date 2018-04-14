@@ -27,7 +27,7 @@ async function genFact(database) {
 	for (let i = 0; i < 15; i++) {
 		texte = texte.replace("$cname", constName);
 		for (let data of database)
-			texte = texte.replace("$" + data.name, randTab(data.strings));
+			texte = texte.replace("$" + data.alias, randTab(data.strings));
 	}
 	return firstCharUpper(texte);
 }

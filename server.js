@@ -46,14 +46,27 @@ http.createServer(async (req, res) => {
     });
     child.send(query.nb);
   } else if (parsed.pathname == "/insert") {
-    if (authorized && query.name !== undefined && query.string !== undefined) {
+    if (authorized && query.alias !== undefined && query.string !== undefined) {
       let database = await facts.fetchDatabase();
       while (query.string.includes("_"))
         query.string = query.string.replace("_", " ");
-      if (!database.some(cat => cat.name == query.name))
-        database.push({name: query.name, strings: []});
+      if (!database.some(cat => cat.alias == query.alias))
+        database.push({alias: query.alias, strings: []});
       database.forEach(cat => {
-        if (cat.name == query.name) cat.strings.push(query.string);
+        if (cat.alias == query.alias) cat.strings.push(query.string);
+      });
+      facts.provideDatabase(database);
+    }
+    res.writeHead(301, {Location: "/database"});
+    res.end();
+  } else if (parsed.pathname == "/delete") {
+    if (authorized && query.alias !== undefined && query.string !== undefined) {
+      let database = await facts.fetchDatabase();
+      while (query.string.includes("_"))
+        query.string = query.string.replace("_", " ");
+      database.forEach(cat => {
+        if (cat.alias = query.alias)
+          cat.strings = cat.strings.filter(str => str != query.string)
       });
       facts.provideDatabase(database);
     }
