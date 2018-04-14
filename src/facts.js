@@ -30,7 +30,7 @@ async function genFact(database) {
 			str = str.replace("$_" + cat.alias, randTab(cat.strings));
 		});
 	}
-	return firstCharUpper(texte);
+	return firstCharUpper(str);
 }
 
 async function findFact(strings) {
