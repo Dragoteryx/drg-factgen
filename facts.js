@@ -113,7 +113,6 @@ let save = [
 			"according to the police, $end.",
 			"some rumors say that $end.",
 			"an ancient prophecy tells that $end.",
-			"someone told me that $end.",
 			"$name, our lord and savior, told me that $end.",
 			"meanwhile, in a parallel universe, $end.",
 			"it is written that only $end.",

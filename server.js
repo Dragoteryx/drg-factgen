@@ -75,6 +75,10 @@ http.createServer(async (req, res) => {
   } else if (parsed.pathname == "/replace") {
     if (authorized && query.before !== undefined && query.after !== undefined) {
       let database = await facts.fetchDatabase();
+      while (query.before.includes("_"))
+        query.before = query.before.replace("_", " ");
+      while (query.after.includes("_"))
+        query.after = query.after.replace("_", " ");
       let str = JSON.stringify(database);
       while (str.includes(before))
         str = str.replace(before, after);
