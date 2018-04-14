@@ -22,15 +22,14 @@ async function genBulk(nb = 100) {
 
 async function genFact(database) {
 	if (database === undefined) database = await fetchDatabase();
-	let str = "$_begin";
-	let constName = randTab(database.reduce((acc, cat) => cat.alias == "name" ? cat.strings : acc));
-	while (str.includes("$_")) {
-		str = str.replace("$_cname", constName);
-		database.forEach(cat => {
-			str = str.replace("$_" + cat.alias, randTab(cat.strings));
-		});
+	let texte = "$_begin";
+	let constName = randTab(database[2].strings);
+	for (let i = 0; i < 15; i++) {
+		texte = texte.replace("$_cname", constName);
+		for (let data of database)
+			texte = texte.replace("$_" + data.alias, randTab(data.strings));
 	}
-	return firstCharUpper(str);
+	return firstCharUpper(texte);
 }
 
 async function findFact(strings) {
