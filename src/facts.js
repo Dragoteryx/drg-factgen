@@ -79,23 +79,8 @@ function fetchDatabase() {
 	})
 }
 
-let save = [];
-
-function resetDatabase() {
-	return provideDatabase(save);
-}
-
-module.exports = {
-  genFact: genFact,
-  findFact: findFact,
-	provideDatabase: provideDatabase,
-	fetchDatabase: fetchDatabase,
-	genBulk: genBulk,
-	resetDatabase: resetDatabase
-};
-
 // DATABASE
-save = [
+let saved = [
 	{
 		alias: "begin",
 		strings: [
@@ -223,7 +208,7 @@ save = [
 			"there's a museum about $group $loc",
 			"there's a museum about $food $loc",
 			"there's a museum about $drink $loc",
-			"$event happenned $loc",
+			"$event happened $loc",
 			"$name created $item to $action",
 			"$movie is $name's favorite movie",
 			"$movie will predict the future",
@@ -356,7 +341,8 @@ save = [
 			"Fluttershy",
 			"Rainbow Dash",
 			"Applejack",
-			"Pinkie Pie"
+			"Pinkie Pie",
+			"someone"
 		]
 	},
 	{
@@ -678,3 +664,12 @@ save = [
 		]
 	}
 ];
+
+module.exports = {
+  genFact: genFact,
+  findFact: findFact,
+	provideDatabase: provideDatabase,
+	fetchDatabase: fetchDatabase,
+	genBulk: genBulk,
+	saved: saved
+};

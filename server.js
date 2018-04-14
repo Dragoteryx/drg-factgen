@@ -4,13 +4,15 @@ require("dotenv").config();
 const http = require("http");
 const url = require("url");
 const cp = require("child_process");
-const facts = require("./facts.js");
+const facts = require("./src/facts.js");
 
 http.createServer(async (req, res) => {
   let parsed = url.parse(req.url, true);
 	let query = parsed.query;
   let authorized = query.auth == process.env.AUTHTOKEN;
 	let now = Date.now();
+  if (parsed.path != "/favicon.ico")
+    console.log(parsed.path + (authorized ? " (authorized)" : ""));
   if (parsed.pathname == "/") {
     res.writeHead(301, {Location: "/generate"});
     res.end();
@@ -33,6 +35,7 @@ http.createServer(async (req, res) => {
     res.writeHead(200, {"Content-Type": "application/json"});
     res.end(JSON.stringify(await facts.fetchDatabase()));
   } else if (parsed.pathname == "/bulk") {
+    console.log("/bulk");
     res.writeHead(200, {"Content-Type": "application/json"});
     if (query.nb === undefined) query.nb = 100;
     let child = cp.fork("./bulk.js");
@@ -49,27 +52,30 @@ http.createServer(async (req, res) => {
       let database = await facts.fetchDatabase();
       while (query.string.includes("_"))
         query.string = query.string.replace("_", " ");
-      if (!database.some(cat => cat.alias == query.alias))
-        database.push({alias: query.alias, strings: []});
       database.forEach(cat => {
-        if (cat.alias == query.alias) cat.strings.push(query.string);
+        if (cat.alias == query.alias) {
+          cat.strings.push(query.string);
+          console.log("Inserted '" + query.string + "' into '" + cat.alias + "'");
+        }
       });
       facts.provideDatabase(database);
     }
-    res.writeHead(301, {Location: "/database"});
+    res.writeHead(302, {Location: "/database"});
     res.end();
-  } else if (parsed.pathname == "/delete") {
+  } else if (parsed.pathname == "/remove") {
     if (authorized && query.alias !== undefined && query.string !== undefined) {
       let database = await facts.fetchDatabase();
       while (query.string.includes("_"))
         query.string = query.string.replace("_", " ");
       database.forEach(cat => {
-        if (cat.alias = query.alias)
-          cat.strings = cat.strings.filter(str => str != query.string)
+        if (cat.alias == query.alias) {
+          cat.strings = cat.strings.filter(str => str != query.string);
+          console.log("Removed '" + query.string + "' from '" + cat.alias + "'");
+        }
       });
       facts.provideDatabase(database);
     }
-    res.writeHead(301, {Location: "/database"});
+    res.writeHead(302, {Location: "/database"});
     res.end();
   } else if (parsed.pathname == "/replace") {
     if (authorized && query.before !== undefined && query.after !== undefined) {
@@ -83,11 +89,23 @@ http.createServer(async (req, res) => {
         str = str.replace(query.before, query.after);
       facts.provideDatabase(JSON.parse(str));
     }
-    res.writeHead(301, {Location: "/database"});
+    res.writeHead(302, {Location: "/database"});
     res.end();
   } else if (parsed.pathname == "/reset") {
-    if (authorized) facts.resetDatabase();
-    res.writeHead(301, {Location: "/database"});
+    if (authorized) {
+      console.log("Database reset.");
+      facts.provideDatabase(facts.saved);
+    }
+    res.writeHead(302, {Location: "/database"});
+    res.end();
+  } else if (parsed.pathname == "/delete") {
+    if (authorized && query.alias) {
+      let database = await facts.fetchDatabase();
+      database = database.filter(cat => cat.alias != query.alias);
+      console.log("Deleted alias '" + query.alias + "' from database.");
+      facts.provideDatabase(database);
+    }
+    res.writeHead(302, {Location: "/database"});
     res.end();
   }
 }).listen(process.env.PORT);
