@@ -79,6 +79,8 @@ function fetchDatabase() {
 	})
 }
 
+let save = [];
+
 function resetDatabase() {
 	return provideDatabase(save);
 }
@@ -93,7 +95,7 @@ module.exports = {
 };
 
 // DATABASE
-let save = [
+save = [
 	{
 		alias: "begin",
 		strings: [
@@ -104,7 +106,7 @@ let save = [
 			"you might not believe me, but $end.",
 			"I'm almost certain that $end.",
 			"I think $end.",
-			"listen : $end.",
+			"listen: $end.",
 			"you are not forced to agree with me, but $end.",
 			"I'm pleased to tell you that $end.",
 			"I'm sorry to inform you that $end.",
@@ -119,10 +121,10 @@ let save = [
 			"just a daily reminder that $end.",
 			"I'm coming from the future to tell you that $end.",
 			"how come $end?",
-			"this is absolute truth : $end.",
+			"this is absolute truth: $end.",
 			"you can't deny that $end.",
 			"you can't disagree with me when I say that $end.",
-			"this is truth : $end.",
+			"this is truth: $end.",
 			"somehow, $end.",
 			"some rumors at $faction say that $end.",
 			"according to $name, $end.",
