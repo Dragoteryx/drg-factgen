@@ -82,6 +82,10 @@ http.createServer(async (req, res) => {
     }
     res.writeHead(301, {Location: "/database"});
     res.end();
+  } else if (parsed.pathname == "/reset") {
+    if (authorized) facts.resetDatabase();
+    res.writeHead(301, {Location: "/database"});
+    res.end();
   }
 }).listen(process.env.PORT);
 

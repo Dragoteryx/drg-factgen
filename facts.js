@@ -33,7 +33,6 @@ async function genFact(database) {
 }
 
 async function findFact(strings) {
-	console.dir(strings)
 	let database = await fetchDatabase();
 	for (let string of strings) {
 		if (!checkDatabase(database, string)) {
@@ -80,18 +79,23 @@ function fetchDatabase() {
 	})
 }
 
+function resetDatabase() {
+	return provideDatabase(save);
+}
+
 module.exports = {
   genFact: genFact,
   findFact: findFact,
 	provideDatabase: provideDatabase,
 	fetchDatabase: fetchDatabase,
-	genBulk: genBulk
+	genBulk: genBulk,
+	resetDatabase: resetDatabase
 };
 
 // DATABASE
-/*let database = [
+let save = [
 	{
-		name: "begin",
+		alias: "begin",
 		strings: [
 			"my Senpai told me that $end.",
 			"did you know that $end?",
@@ -121,7 +125,7 @@ module.exports = {
 			"you can't disagree with me when I say that $end.",
 			"this is truth : $end.",
 			"somehow, $end.",
-			"some rumors at $entr say that $end.",
+			"some rumors at $faction say that $end.",
 			"according to $name, $end.",
 			"I bet you $item that $end.",
 			"you thought it was $name, but it was me, Dio!",
@@ -137,13 +141,13 @@ module.exports = {
 		]
 	},
 	{
-		name: "end",
+		alias: "end",
 		strings: [
 			"$name's favorite drink is $drink",
 			"$name's favorite food is $food",
 			"$cname is love, $cname is life",
-			"$name works for $entr",
-			"$entr headquarters are located $loc",
+			"$name works for $faction",
+			"$faction headquarters are located $loc",
 			"$name is $name",
 			"$name is $adj",
 			"$name is $adj and $adj",
@@ -153,7 +157,7 @@ module.exports = {
 			"$name hates you",
 			"$name loves you",
 			"$name would like $goal",
-			"$entr would like $goal",
+			"$faction would like $goal",
 			"$name has no soul",
 			"$name needs healing",
 			"$name needs $item",
@@ -201,8 +205,8 @@ module.exports = {
 			"$name has stolen $item",
 			"$item was created by $name",
 			"$name and $name allied themselves $goal",
-			"$entr and $entr allied themselves $goal",
-			"$name and $entr allied themselves $goal",
+			"$faction and $faction allied themselves $goal",
+			"$name and $faction allied themselves $goal",
 			"$name came into possession of $item",
 			"$goal, you need $goal first",
 			"$name can help you $goal",
@@ -211,9 +215,9 @@ module.exports = {
 			"the easiest way $goal is $goal",
 			"$item is powered using $item",
 			"$name caused $event",
-			"$entr caused $event",
+			"$faction caused $event",
 			"there's a museum about $name $loc",
-			"there's a museum about $entr $loc",
+			"there's a museum about $faction $loc",
 			"there's a museum about $group $loc",
 			"there's a museum about $food $loc",
 			"there's a museum about $drink $loc",
@@ -228,7 +232,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "name",
+		alias: "name",
 		strings: [
 			"Dragoteryx",
 			"Senpai",
@@ -348,7 +352,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "adj",
+		alias: "adj",
 		strings: [
 			"dead",
 			"ugly",
@@ -368,7 +372,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "food",
+		alias: "food",
 		strings: [
 			"kebabs",
 			"wieners",
@@ -384,7 +388,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "drink",
+		alias: "drink",
 		strings: [
 			"bleach",
 			"Coca Cola",
@@ -396,7 +400,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "group",
+		alias: "group",
 		strings: [
 			"black people",
 			"ghouls",
@@ -412,7 +416,7 @@ module.exports = {
 			"birds",
 			"squirrels",
 			"jews",
-			"the employees of $entr",
+			"the employees of $faction",
 			"nazis",
 			"the Dark Ones",
 			"bronies",
@@ -420,7 +424,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "entr",
+		alias: "faction",
 		strings: [
 			"Black Mesa",
 			"the SCP Foundation",
@@ -440,11 +444,12 @@ module.exports = {
 			"Hanza",
 			"the Red Line",
 			"the Fourth Reich",
-			"Polis"
+			"Polis",
+			"the Sacred Fire Cult"
 		]
 	},
 	{
-		name: "loc",
+		alias: "loc",
 		strings: [
 			"in a pineapple under the sea",
 			"in my swamp",
@@ -453,7 +458,7 @@ module.exports = {
 			"on Jupiter",
 			"under your bed",
 			"in the Wayne manor",
-			"in $entr headquarters",
+			"in $faction headquarters",
 			"inside my car battery",
 			"on Mercury",
 			"next to Trump's wall",
@@ -465,7 +470,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "item",
+		alias: "item",
 		strings: [
 			"the One Ring to rule them all",
 			"a flower",
@@ -514,7 +519,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "goal",
+		alias: "goal",
 		strings: [
 			"to destroy $item",
 			"to find $item",
@@ -530,17 +535,17 @@ module.exports = {
 		]
 	},
 	{
-		name: "event",
+		alias: "event",
 		strings: [
 			"the zombie apocalypse",
 			"the end of the world",
 			"Donald Trump becoming President of the United States",
-			"the nuclear war between $entr and $entr",
-			"the war between $entr and $entr",
+			"the nuclear war between $faction and $faction",
+			"the war between $faction and $faction",
 			"the nuclear war between $pays and $pays",
 			"the war between $pays and $pays",
-			"the nuclear war between $pays and $entr",
-			"the war between $pays and $entr",
+			"the nuclear war between $pays and $faction",
+			"the war between $pays and $faction",
 			"World War 1",
 			"World War 2",
 			"World War 3",
@@ -552,7 +557,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "pays",
+		alias: "pays",
 		strings: [
 			"France",
 			"United Kingdom",
@@ -569,7 +574,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "ville",
+		alias: "ville",
 		strings: [
 			"Paris",
 			"London",
@@ -585,7 +590,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "movie",
+		alias: "movie",
 		strings: [
 			"Cars 2",
 			"Shrek",
@@ -603,15 +608,15 @@ module.exports = {
 		]
 	},
 	{
-		name: "warcry",
+		alias: "warcry",
 		strings: [
 			"SQUADALA! WE'RE OFF!",
 			"THIS IS SPARTA!",
-			"..."
+			"YOU SHALL NOT PASS!"
 		]
 	},
 	{
-		name: "action",
+		alias: "action",
 		strings: [
 			"kill $name",
 			"eat $name",
@@ -621,9 +626,9 @@ module.exports = {
 			"steal $item",
 			"buy $item",
 			"fuck $name",
-			"join $entr",
-			"get fired from $entr",
-			"work for $entr",
+			"join $faction",
+			"get fired from $faction",
+			"work for $faction",
 			"die",
 			"sleep",
 			"cook $food",
@@ -631,7 +636,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "game",
+		alias: "game",
 		strings: [
 			"Skyrim",
 			"Warframe",
@@ -651,7 +656,7 @@ module.exports = {
 		]
 	},
 	{
-		name: "nb",
+		alias: "nb",
 		strings: [
 			"0",
 			"1",
@@ -665,4 +670,4 @@ module.exports = {
 			"9"
 		]
 	}
-];*/
+];
