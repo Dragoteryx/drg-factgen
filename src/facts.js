@@ -66,17 +66,33 @@ function firstCharUpper(string) {
 	return string[0].toUpperCase() + string.slice(1);
 }
 
-function provideDatabase(database) {
-	return redis.set("database", JSON.stringify(database));
+function provide(name, database) {
+	return redis.set(name, JSON.stringify(database));
 }
 
-function fetchDatabase() {
+function fetch(name) {
 	return new Promise((resolve, reject) => {
-		redis.get("database", (err, data) => {
+		redis.get(name, (err, data) => {
 			if (err) reject(err);
 			else resolve(JSON.parse(data));
 		});
-	})
+	});
+}
+
+function provideDatabase(database) {
+	return provide("database", database);
+}
+
+function fetchDatabase() {
+	return fetch("database");
+}
+
+function provideSaved(database) {
+	return provide("saved", database);
+}
+
+function fetchSaved() {
+	return fetch("saved");
 }
 
 // DATABASE
@@ -680,6 +696,8 @@ module.exports = {
   findFact: findFact,
 	provideDatabase: provideDatabase,
 	fetchDatabase: fetchDatabase,
+	provideSaved: provideSaved,
+	fetchSaved: fetchSaved,
 	genBulk: genBulk,
 	saved: saved
 };

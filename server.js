@@ -126,6 +126,18 @@ app.get("/replace/:before/:after", async (req, res) => {
     while (str.includes(query.before))
       str = str.replace(query.before, query.after);
     facts.provideDatabase(JSON.parse(str));
+    console.log("Replaced '" + query.before + "' with '" + query.after + "'.");
+  }
+  res.end();
+});
+
+app.get("/delete/:cat", async (req, res) => {
+  res.writeHead(302, {Location: "/database"});
+  if (auths.includes(ip(req))) {
+    let database = await facts.fetchDatabase();
+    database = database.filter(cat => cat.alias != req.params.cat);
+    console.log("Deleted category '" + req.params.cat + "'.");
+    facts.provideDatabase(database);
   }
   res.end();
 });
@@ -137,13 +149,22 @@ app.get("/reset", async (req, res) => {
   res.end();
 });
 
-app.get("/delete/:cat", async (req, res) => {
+app.get("/save", async (req, res) => {
   res.writeHead(302, {Location: "/database"});
   if (auths.includes(ip(req))) {
+    console.log("Database saved.");
     let database = await facts.fetchDatabase();
-    database = database.filter(cat => cat.alias != req.params.cat);
-    console.log("Deleted category '" + req.params.cat + "'.");
-    facts.provideDatabase(database);
+    facts.provideSaved(database);
+  }
+  res.end();
+});
+
+app.get("/load", async (req, res) => {
+  res.writeHead(302, {Location: "/database"});
+  if (auths.includes(ip(req))) {
+    console.log("Database restored.");
+    let saved = await facts.fetchSaved();
+    facts.provideDatabase(saved);
   }
   res.end();
 });
@@ -162,7 +183,6 @@ app.get("/auth/:auth", async (req, res) => {
   } else {
     res.end(JSON.stringify({access: false, until: null}));
   }
-  res.end();
 });
 
 app.use(async (req, res) => {
