@@ -142,7 +142,7 @@ app.get("/delete/:cat", async (req, res) => {
   if (auths.includes(ip(req))) {
     let database = await facts.fetchDatabase();
     database = database.filter(cat => cat.alias != req.params.cat);
-    console.log("Deleted category '" + req.params.cat + "' from database.");
+    console.log("Deleted category '" + req.params.cat + "'.");
     facts.provideDatabase(database);
   }
   res.end();
@@ -151,11 +151,13 @@ app.get("/delete/:cat", async (req, res) => {
 app.get("/auth/:auth", async (req, res) => {
   res.writeHead(200, {"Content-Type": "application/json"});
   if (req.params.auth == process.env.AUTHTOKEN) {
-    auths.push(ip(req));
-    console.dir(auths, {colors: true});
+    let reqip = ip(req);
+    auths.push(reqip);
     setTimeout(() => {
-      auths = auths.filter(ip => ip == ip(req));
+      auths = auths.filter(ip => ip == reqip);
+      console.log("'" + reqip + "' disconnected.");
     }, 900000);
+    console.log("'" + reqip + "' is now authorized for 15 minutes.");
     res.end(JSON.stringify({access: true, until: Date.now() + 900000}));
   } else {
     res.end(JSON.stringify({access: false, until: null}));
