@@ -22,7 +22,7 @@ app.get("/", async (req, res) => {
 
 app.get("/favicon.ico", async (req, res) => {
   fs.readFile("./favicon.ico", (err, data) => {
-    res.writeHead(200,{'Content-type':'image/x-icon'});
+    res.writeHead(200, {"Content-type": "image/x-icon"});
     res.end(data);
   });
 });
@@ -153,7 +153,7 @@ app.get("/delete/:cat", async (req, res) => {
 app.get("/reset", async (req, res) => {
   res.writeHead(302, {Location: "/database"});
   console.log("Database reset.");
-  facts.provideDatabase(facts.saved);
+  facts.provideDatabase(facts.local);
   res.end();
 });
 
