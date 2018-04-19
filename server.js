@@ -2,18 +2,15 @@
 
 require("dotenv").config();
 const express = require("express");
-const bodyparser = require("body-parser");
-const url = require("url");
+const bodyParser = require("body-parser");
 const cp = require("child_process");
 const ip = require("client-ip");
 const fs = require("fs");
 const facts = require("./src/facts.js");
 
 const app = express();
-app.use(bodyparser.urlencoded({ extended: false }));
-app.use(bodyparser.json());
-
-const auths = [];
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 app.get("/", async (req, res) => {
   res.writeHead(301, {Location: "/generate"});
@@ -47,11 +44,6 @@ app.get("/generate/:includes", async (req, res) => {
   child.send(req.params.includes);
 });
 
-app.get("/database", async (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json"});
-  res.end(JSON.stringify(await facts.fetchDatabase()));
-});
-
 function bulk(nb, res) {
   let child = cp.fork("./src/bulk.js");
   child.on("message", bulk => {
@@ -74,122 +66,148 @@ app.get("/bulk/:nb", async (req, res) => {
   bulk(req.params.nb, res);
 });
 
-app.get("/insert/:alias/:string", async (req, res) => {
-  res.writeHead(302, {Location: "/database"});
-  if (auths.includes(ip(req))) {
+app.get("/database", async (req, res) => {
+  res.writeHead(200, {"Content-Type": "application/json"});
+  res.end(JSON.stringify(await facts.fetchDatabase()));
+});
+
+app.post("/database", async (req, res) => {
+  if (req.get("Authorization") == process.env.AUTHTOKEN) {
     let database = await facts.fetchDatabase();
-    let query = {
-      alias: req.params.alias,
-      string: req.params.string
-    };
-    while (query.string.includes("_"))
-      query.string = query.string.replace("_", " ");
-    if (!database.some(cat => cat.alias == query.alias))
-      database.push({alias: query.alias, strings: []});
-    database.forEach(cat => {
-      if (cat.alias == query.alias) {
-        cat.strings.push(query.string);
-        console.log("Inserted '" + query.string + "' into '" + cat.alias + "'");
+    if (req.body.alias !== undefined) {
+      database.push({alias: req.body.alias, strings: []});
+      facts.provideDatabase(database);
+      res.writeHead(201, {"Content-Type": "application/json"});
+      res.end(JSON.stringify({authorized: false, inserted: true}));
+    } else {
+      res.writeHead(204, {"Content-Type": "application/json"});
+      res.end(JSON.stringify({authorized: false, inserted: false}));
+    }
+  } else {
+    res.writeHead(403, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({authorized: false}));
+  }
+});
+
+app.get("/database/:alias", async (req, res) => {
+  let database = await facts.fetchDatabase();
+  let cat = database.reduce((acc, cat) => cat.alias == req.params.alias ? cat : acc, null);
+  if (cat === null) {
+    res.writeHead(404, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({}));
+  } else {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.end(JSON.stringify(cat));
+  }
+});
+
+app.delete("/database/:alias", async (req, res) => {
+  if (req.get("Authorization") == process.env.AUTHTOKEN) {
+    let database = await facts.fetchDatabase();
+    let ndatabase = database.filter(cat => cat.alias != req.params.alias);
+    if (database.length != ndatabase) {
+      facts.provideDatabase(ndatabase);
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.end(JSON.stringify({authorized: true, deleted: true}));
+    } else {
+      res.writeHead(404, {"Content-Type": "application/json"});
+      res.end(JSON.stringify({authorized: true, deleted: false}));
+    }
+  } else {
+    res.writeHead(403, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({authorized: false}));
+  }
+});
+
+app.patch("/database/:alias", async (req, res) => {
+  if (req.get("Authorization") == process.env.AUTHTOKEN) {
+    let database = await facts.fetchDatabase();
+    for (let cat of database) {
+      if (cat.alias == req.params.alias) {
+        if (req.body.operation == "insert" && req.body.string !== undefined) {
+          cat.strings.push(req.body.string);
+          facts.provideDatabase(database);
+          res.writeHead(200, {"Content-Type": "application/json"});
+          res.end(JSON.stringify({authorized: true, found: true, inserted: true}));
+          return;
+        }
+        if (req.body.operation == "remove" && req.body.string !== undefined) {
+          let nstrings = cat.strings.filter(str => !str.includes(req.body.string));
+          let nb = cat.strings.length - nstrings.length;
+          cat.strings = nstrings;
+          facts.provideDatabase(database);
+          res.writeHead(200, {"Content-Type": "application/json"});
+          res.end(JSON.stringify({authorized: true, found: true, removed: nb}));
+          return;
+        }
+        if (req.body.operation == "rename" && req.body.alias !== undefined) {
+          cat.alias = req.body.alias;
+          facts.provideDatabase(database);
+          res.writeHead(200, {"Content-Type": "application/json"});
+          res.end(JSON.stringify({authorized: true, found: true, renamed: true}));
+          return;
+        }
+        if (req.body.operation == "replace" && req.body.before !== undefined && req.body.after !== undefined) {
+          let strings = JSON.stringify(cat.strings);
+          let nb = 0;
+          while (strings.includes(req.body.before)) {
+            nb++;
+            strings = strings.replace(req.body.before, req.body.after);
+          }
+          cat.strings = JSON.parse(strings);
+          facts.provideDatabase(database);
+          res.writeHead(200, {"Content-Type": "application/json"});
+          res.end(JSON.stringify({authorized: true, found: true, replaced: nb}));
+          return;
+        }
+        res.writeHead(204, {"Content-Type": "application/json"});
+        res.end(JSON.stringify({authorized: true, found: true}));
+        return;
       }
-    });
-    facts.provideDatabase(database);
+    }
+    res.writeHead(404, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({authorized: true, found: false}));
+  } else {
+    res.writeHead(403, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({authorized: false}));
   }
-  res.end();
 });
 
-app.get("/remove/:alias/:string", async (req, res) => {
-  res.writeHead(302, {Location: "/database"});
-  if (auths.includes(ip(req))) {
-    let database = await facts.fetchDatabase();
-    let query = {
-      alias: req.params.alias,
-      string: req.params.string
-    };
-    while (query.string.includes("_"))
-      query.string = query.string.replace("_", " ");
-    database.forEach(cat => {
-      if (cat.alias == query.alias) {
-        cat.strings = cat.strings.filter(str => str != query.string);
-        console.log("Removed '" + query.string + "' from '" + cat.alias + "'");
-      }
-    });
-    facts.provideDatabase(database);
+app.put("/reset", async (req, res) => {
+  if (req.get("Authorization") == process.env.AUTHTOKEN) {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    console.log("Database reset.");
+    facts.provideDatabase(facts.local);
+    res.end(JSON.stringify({authorized: true}));
+  } else {
+    res.writeHead(403, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({authorized: false}));
   }
-  res.end();
 });
 
-app.get("/replace/:before/:after", async (req, res) => {
-  res.writeHead(302, {Location: "/database"});
-  if (auths.includes(ip(req))) {
-    let database = await facts.fetchDatabase();
-    let query = {
-      before: req.params.before,
-      after: req.params.after
-    };
-    while (query.before.includes("_"))
-      query.before = query.before.replace("_", " ");
-    while (query.after.includes("_"))
-      query.after = query.after.replace("_", " ");
-    let str = JSON.stringify(database);
-    while (str.includes(query.before))
-      str = str.replace(query.before, query.after);
-    facts.provideDatabase(JSON.parse(str));
-    console.log("Replaced '" + query.before + "' with '" + query.after + "'.");
-  }
-  res.end();
-});
-
-app.get("/delete/:cat", async (req, res) => {
-  res.writeHead(302, {Location: "/database"});
-  if (auths.includes(ip(req))) {
-    let database = await facts.fetchDatabase();
-    database = database.filter(cat => cat.alias != req.params.cat);
-    console.log("Deleted category '" + req.params.cat + "'.");
-    facts.provideDatabase(database);
-  }
-  res.end();
-});
-
-app.get("/reset", async (req, res) => {
-  res.writeHead(302, {Location: "/database"});
-  console.log("Database reset.");
-  facts.provideDatabase(facts.local);
-  res.end();
-});
-
-app.get("/save", async (req, res) => {
-  res.writeHead(302, {Location: "/database"});
-  if (auths.includes(ip(req))) {
+app.put("/save", async (req, res) => {
+  if (req.get("Authorization") == process.env.AUTHTOKEN) {
+    res.writeHead(200, {"Content-Type": "application/json"});
     console.log("Database saved.");
     let database = await facts.fetchDatabase();
     facts.provideSaved(database);
+    res.end(JSON.stringify({authorized: true}));
+  } else {
+    res.writeHead(403, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({authorized: false}));
   }
-  res.end();
 });
 
-app.get("/load", async (req, res) => {
-  res.writeHead(302, {Location: "/database"});
-  if (auths.includes(ip(req))) {
+app.put("/load", async (req, res) => {
+  if (req.get("Authorization") == process.env.AUTHTOKEN) {
+    res.writeHead(200, {"Content-Type": "application/json"});
     console.log("Database restored.");
     let saved = await facts.fetchSaved();
     facts.provideDatabase(saved);
-  }
-  res.end();
-});
-
-app.get("/auth/:auth", async (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json"});
-  if (req.params.auth == process.env.AUTHTOKEN) {
-    let reqip = ip(req);
-    auths.push(reqip);
-    setTimeout(() => {
-      auths = auths.filter(ip => ip == reqip);
-      console.log("'" + reqip + "' disconnected.");
-    }, 900000);
-    console.log("'" + reqip + "' is now authorized for 15 minutes.");
-    res.end(JSON.stringify({access: true, until: Date.now() + 900000}));
+    res.end(JSON.stringify({authorized: true}));
   } else {
-    res.end(JSON.stringify({access: false, until: null}));
+    res.writeHead(403, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({authorized: false}));
   }
 });
 
