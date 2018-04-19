@@ -6,6 +6,7 @@ const bodyparser = require("body-parser");
 const url = require("url");
 const cp = require("child_process");
 const ip = require("client-ip");
+const fs = require("fs");
 const facts = require("./src/facts.js");
 
 const app = express();
@@ -17,6 +18,13 @@ const auths = [];
 app.get("/", async (req, res) => {
   res.writeHead(301, {Location: "/generate"});
   res.end();
+});
+
+app.get("/favicon.ico", async (req, res) => {
+  fs.readFile("./favicon.ico", (err, data) => {
+    res.writeHead(200,{'Content-type':'image/x-icon'});
+    res.end(data);
+  });
 });
 
 app.get("/generate", async (req, res) => {
