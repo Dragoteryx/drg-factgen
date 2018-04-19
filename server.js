@@ -89,6 +89,31 @@ app.post("/database", async (req, res) => {
   }
 });
 
+app.put("/database", async (req, res) => {
+  if (req.get("Authorization") == process.env.AUTHTOKEN) {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    switch (req.body.operation) {
+      case "save":
+        console.log("Database saved.");
+        let database = await facts.fetchDatabase();
+        facts.provideSaved(database);
+        break;
+      case "load":
+        console.log("Database restored.");
+        let saved = await facts.fetchSaved();
+        facts.provideDatabase(saved);
+        break;
+      case "reset":
+        console.log("Database reset.");
+        facts.provideDatabase(facts.local);
+    }
+    res.end(JSON.stringify({authorized: true}));
+  } else {
+    res.writeHead(403, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({authorized: false}));
+  }
+});
+
 app.get("/database/:alias", async (req, res) => {
   let database = await facts.fetchDatabase();
   let cat = database.reduce((acc, cat) => cat.alias == req.params.alias ? cat : acc, null);
@@ -167,44 +192,6 @@ app.patch("/database/:alias", async (req, res) => {
     }
     res.writeHead(404, {"Content-Type": "application/json"});
     res.end(JSON.stringify({authorized: true, found: false}));
-  } else {
-    res.writeHead(403, {"Content-Type": "application/json"});
-    res.end(JSON.stringify({authorized: false}));
-  }
-});
-
-app.put("/reset", async (req, res) => {
-  if (req.get("Authorization") == process.env.AUTHTOKEN) {
-    res.writeHead(200, {"Content-Type": "application/json"});
-    console.log("Database reset.");
-    facts.provideDatabase(facts.local);
-    res.end(JSON.stringify({authorized: true}));
-  } else {
-    res.writeHead(403, {"Content-Type": "application/json"});
-    res.end(JSON.stringify({authorized: false}));
-  }
-});
-
-app.put("/save", async (req, res) => {
-  if (req.get("Authorization") == process.env.AUTHTOKEN) {
-    res.writeHead(200, {"Content-Type": "application/json"});
-    console.log("Database saved.");
-    let database = await facts.fetchDatabase();
-    facts.provideSaved(database);
-    res.end(JSON.stringify({authorized: true}));
-  } else {
-    res.writeHead(403, {"Content-Type": "application/json"});
-    res.end(JSON.stringify({authorized: false}));
-  }
-});
-
-app.put("/load", async (req, res) => {
-  if (req.get("Authorization") == process.env.AUTHTOKEN) {
-    res.writeHead(200, {"Content-Type": "application/json"});
-    console.log("Database restored.");
-    let saved = await facts.fetchSaved();
-    facts.provideDatabase(saved);
-    res.end(JSON.stringify({authorized: true}));
   } else {
     res.writeHead(403, {"Content-Type": "application/json"});
     res.end(JSON.stringify({authorized: false}));
