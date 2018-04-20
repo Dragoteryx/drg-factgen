@@ -109,13 +109,13 @@ app.delete("/database/:alias", async (req, res) => {
   if (req.get("Authorization") == process.env.AUTHTOKEN) {
     let database = await facts.fetchDatabase();
     let ndatabase = database.filter(cat => cat.alias != req.params.alias);
-    if (database.length != ndatabase) {
+    if (database.length != ndatabase.length) {
       facts.provideDatabase(ndatabase);
       res.writeHead(200, {"Content-Type": "application/json"});
-      res.end(JSON.stringify({authorized: true, deleted: true}));
+      res.end(JSON.stringify({authorized: true}));
     } else {
       res.writeHead(404, {"Content-Type": "application/json"});
-      res.end(JSON.stringify({authorized: true, deleted: false}));
+      res.end(JSON.stringify({authorized: true}));
     }
   } else {
     res.writeHead(401, {"Content-Type": "application/json"});
