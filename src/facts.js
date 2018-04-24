@@ -1,5 +1,15 @@
 const redis = require("redis").createClient(process.env.REDIS_URL);
 const local = require("./database.json");
+let redisOK = false;
+redis.on("ready", () => {
+	redisOK = true;
+});
+redis.on("end", () => {
+	redisOK = false;
+});
+redis.on("error", err => {
+	redisOK = false;
+});
 
 // FACTS RELATED FUNCTIONS
 function checkDatabase(database, string) {
@@ -85,7 +95,7 @@ function provideDatabase(database) {
 }
 
 function fetchDatabase() {
-	return fetch("database");
+	return redisOK ? fetch("database") : local;
 }
 
 function provideSaved(database) {
@@ -93,7 +103,7 @@ function provideSaved(database) {
 }
 
 function fetchSaved() {
-	return fetch("saved");
+	return redisOK ? fetch("saved") : local;
 }
 
 module.exports = {
