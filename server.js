@@ -25,13 +25,13 @@ app.get("/favicon.ico", async (req, res) => {
 });
 
 app.get("/generate", async (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json"});
+  res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
   let now = Date.now();
   res.end(JSON.stringify({fact: await facts.genFact(), found: true, duration: (Date.now() - now), tries: 1}));
 });
 
 app.get("/generate/:includes", async (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json"});
+  res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
   let now = Date.now();
   let child = cp.fork("./src/find.js");
   child.on("message", fact => {
@@ -57,12 +57,12 @@ function bulk(nb, res) {
 }
 
 app.get("/bulk", async (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json"});
+  res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
   bulk(100, res);
 });
 
 app.get("/bulk/:nb", async (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json"});
+  res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
   bulk(req.params.nb, res);
 });
 
