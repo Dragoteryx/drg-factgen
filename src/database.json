@@ -201,7 +201,6 @@
       "a bird",
       "a shark",
       "a nazi",
-      "a facter",
       "a bitch",
       "a bot",
       "a vampire",
@@ -266,7 +265,14 @@
       "Applejack",
       "Pinkie Pie",
       "someone",
-      "PewDiePie"
+      "PewDiePie",
+      "Jack Sparrow",
+      "Hatsune Miku",
+      "Kagamine Rin",
+      "Kagamine Len",
+      "Megurine Luka",
+      "Elon Musk",
+      "Tony Stark"
     ]
   },
   {
@@ -385,7 +391,7 @@
       "in the ISS",
       "behind you",
       "in $pays",
-      "in $town",
+      "in $ville",
       "in the metro"
     ]
   },
@@ -475,7 +481,7 @@
       "China",
       "India",
       "Russia",
-      "USSR",
+      "USRR",
       "Poland",
       "South Korea",
       "Uganda"
