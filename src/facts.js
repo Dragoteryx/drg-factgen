@@ -19,6 +19,8 @@ function generate(keywds = []) {
       }
     }
   }
+  while (text.includes(",,"))
+    text = text.replace(",,", ",");
   res.fact = upper(text);
   if (showMissing)
     res.missing = keywds;
