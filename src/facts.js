@@ -1,7 +1,7 @@
 const database = require("./database.json");
 
 function generate(keywds = []) {
-  let res = {text: null, steps: []};
+  let res = {fact: null, steps: []};
   let showMissing = keywds.length > 0;
   keywds.sort(() => 0.5 > Math.random());
   let text = "§start";
@@ -19,7 +19,7 @@ function generate(keywds = []) {
       }
     }
   }
-  res.text = upper(text);
+  res.fact = upper(text);
   if (showMissing)
     res.missing = keywds;
   return res;
