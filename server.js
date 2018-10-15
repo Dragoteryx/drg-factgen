@@ -77,8 +77,8 @@ app.get("/database", (req, res) => {
 });
 
 app.use((req, res) => {
-    res.writeHead(404, {"Content-Type": "application/json"});
-    res.end(JSON.stringify({}));
+  res.writeHead(404, {"Content-Type": "application/json"});
+  res.end(JSON.stringify({}));
 });
 
 app.listen(process.env.PORT, () => {
