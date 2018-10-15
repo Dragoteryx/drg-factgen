@@ -6,6 +6,7 @@ process.on("message", query => {
   let i = 0;
   while (found.missing.length > 0) {
     let fact = facts.generate(query);
+    found = fact;
     if (fact.missing.length < found.missing.length)
       found = fact;
     i++;
