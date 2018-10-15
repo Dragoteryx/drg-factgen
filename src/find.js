@@ -2,11 +2,10 @@ const facts = require("./facts.js");
 
 process.on("message", query => {
   query = query.split("_");
-  let found = {text: null, steps: [], missing: query};
   let i = 0;
+  let found = facts.generate(query);
   while (found.missing.length > 0) {
     let fact = facts.generate(query);
-    found = fact;
     if (fact.missing.length < found.missing.length)
       found = fact;
     i++;
