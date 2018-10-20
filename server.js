@@ -53,11 +53,13 @@ function generate(res, options = {}) {
 app.get("/generate", async (req, res) => {
   try {
     console.log("\nCreate basic Generate child.");
-    let facts = await generate(res, {
+    let options = {
       nb: req.query.nb,
       words: req.query.words ? req.query.words.split("_") : [],
       length: req.query.length
-    });
+    };
+    console.log(options);
+    let facts = await generate(res, options);
     res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
     res.end(JSON.stringify(facts));
   } catch(err) {
