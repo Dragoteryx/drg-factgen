@@ -68,7 +68,6 @@
       "§name is searching for §item",
       "§name's treasure is hidden §location",
       "§name doesn't exist",
-      "§name wants to §action",
       "§name looks better than you",
       "§name is your master",
       "§name is not as dumb as §name",
@@ -162,9 +161,8 @@
       "Winston",
       "D.Va",
       "Bastion",
-      "my penis",
       "the Internet",
-      "Mecha Hitler",
+      "Hitler",
       "Putin",
       "the Cookie Monster",
       "the Dovahkiin",
@@ -187,7 +185,7 @@
       "a Warframe",
       "Stalin",
       "Lenin",
-      "SpongeBob SquarePants",
+      "SpongeBob",
       "John Cena",
       "Dio",
       "Sakamoto-senpai",
@@ -273,54 +271,6 @@
     ]
   },
   {
-    "alias": "adj",
-    "strings": [
-      "dead",
-      "ugly",
-      "beautiful",
-      "clever",
-      "dumb",
-      "evil",
-      "not a bot, contrary to me",
-      "the best waifu",
-      "the best Warframe",
-      "the best Overwatch hero",
-      "a better Putin",
-      "delicious",
-      "out",
-      "a lie",
-      "gay"
-    ]
-  },
-  {
-    "alias": "food",
-    "strings": [
-      "kebabs",
-      "wieners",
-      "bananas",
-      "flowers",
-      "cheese",
-      "rotten fish",
-      "fish",
-      "potatoes",
-      "tomatoes",
-      "curry with rice",
-      "chicken"
-    ]
-  },
-  {
-    "alias": "drink",
-    "strings": [
-      "bleach",
-      "Coca Cola",
-      "Sprite",
-      "Pepsi",
-      "Orangina",
-      "Mountain Dew",
-      "vodka"
-    ]
-  },
-  {
     "alias": "group",
     "strings": [
       "black people",
@@ -346,50 +296,53 @@
     ]
   },
   {
-    "alias": "faction",
+    "alias": "adj",
     "strings": [
-      "Black Mesa",
-      "the SCP Foundation",
-      "Aperture Science",
-      "the VLT Corporation",
-      "the Internet",
-      "the Third Reich",
-      "Overwatch",
-      "Twitter",
-      "Valve",
-      "the Illuminati",
-      "the Team Benediction",
-      "Wayne Enterprise",
-      "the Ku Klux Klan",
-      "the KKK",
-      "the DrG Company",
-      "Hanza",
-      "the Red Line",
-      "the Fourth Reich",
-      "Polis",
-      "the Sacred Fire Cult",
-      "§country's army"
+      "dead",
+      "ugly",
+      "beautiful",
+      "clever",
+      "dumb",
+      "evil",
+      "not a bot, contrary to me",
+      "not real",
+      "the best waifu",
+      "the best Warframe",
+      "the best Overwatch hero",
+      "a better Putin",
+      "delicious",
+      "out",
+      "a lie",
+      "gay"
     ]
   },
   {
-    "alias": "location",
+    "alias": "action",
     "strings": [
-      "in a pineapple under the sea",
-      "in my swamp",
-      "in my ass",
-      "in Hogwarts",
-      "on Jupiter",
-      "under your bed",
-      "in the Wayne manor",
-      "in §faction headquarters",
-      "inside my car battery",
-      "on Mercury",
-      "next to Trump's wall",
-      "in the ISS",
-      "behind you",
-      "in §country",
-      "in §town",
-      "in the metro"
+      "kill §name",
+      "eat §name",
+      "marry §name",
+      "drink §drink",
+      "eat §food",
+      "steal §item",
+      "buy §item",
+      "join §faction",
+      "get fired from §faction",
+      "work for §faction",
+      "die",
+      "sleep",
+      "cook §food",
+      "meet §name",
+      "invade §country",
+      "defeat §name",
+      "destroy §item",
+      "find §item",
+      "be as cool as me",
+      "be as cool as §name",
+      "kill you",
+      "eat you",
+      "kill all §group",
+      "eat all §group"
     ]
   },
   {
@@ -441,6 +394,81 @@
       "the Elements of Harmony",
       "§name's chair",
       "SCP-178"
+    ]
+  },
+  {
+    "alias": "food",
+    "strings": [
+      "kebabs",
+      "wieners",
+      "bananas",
+      "flowers",
+      "cheese",
+      "rotten fish",
+      "fish",
+      "potatoes",
+      "tomatoes",
+      "curry with rice",
+      "chicken"
+    ]
+  },
+  {
+    "alias": "drink",
+    "strings": [
+      "bleach",
+      "Coca Cola",
+      "Sprite",
+      "Pepsi",
+      "Orangina",
+      "Mountain Dew",
+      "vodka"
+    ]
+  },
+  {
+    "alias": "faction",
+    "strings": [
+      "Black Mesa",
+      "the SCP Foundation",
+      "Aperture Science",
+      "the VLT Corporation",
+      "the Internet",
+      "the Third Reich",
+      "Overwatch",
+      "Twitter",
+      "Valve",
+      "the Illuminati",
+      "the Team Benediction",
+      "Wayne Enterprise",
+      "the Ku Klux Klan",
+      "the KKK",
+      "the DrG Company",
+      "Hanza",
+      "the Red Line",
+      "the Fourth Reich",
+      "Polis",
+      "the Sacred Fire Cult",
+      "§country's army"
+    ]
+  },
+  {
+    "alias": "location",
+    "strings": [
+      "in a pineapple under the sea",
+      "in my swamp",
+      "in my ass",
+      "in Hogwarts",
+      "on Jupiter",
+      "under your bed",
+      "in the Wayne manor",
+      "in §faction headquarters",
+      "inside my car battery",
+      "on Mercury",
+      "next to Trump's wall",
+      "in the ISS",
+      "behind you",
+      "in §country",
+      "in §town",
+      "in the metro"
     ]
   },
   {
@@ -528,36 +556,6 @@
       "DEUS VULT!",
       "FUS RO DAH!",
       "LEEROY JENKINS!"
-    ]
-  },
-  {
-    "alias": "action",
-    "strings": [
-      "kill §name",
-      "eat §name",
-      "marry §name",
-      "drink §drink",
-      "eat §food",
-      "steal §item",
-      "buy §item",
-      "fuck §name",
-      "join §faction",
-      "get fired from §faction",
-      "work for §faction",
-      "die",
-      "sleep",
-      "cook §food",
-      "meet §name",
-      "invade §country",
-      "defeat §name",
-      "destroy §item",
-      "find §item",
-      "be as cool as me",
-      "be as cool as §name",
-      "kill you",
-      "eat you",
-      "kill all §group",
-      "eat all §group"
     ]
   },
   {

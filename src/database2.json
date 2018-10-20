@@ -1,0 +1,331 @@
+[
+  {
+    "handle": "start",
+    "values": [
+      "§fact.",
+      "I wanted to tell you that §fact.",
+      "you might not believe me, but §fact.",
+      "I won't force you to agree with me, but §fact.",
+      "I'm pleased to tell you that §fact.",
+      "I'm sorry to inform you that §fact.",
+      "some rumors say that §fact.",
+      "an ancient prophecy tells that §fact.",
+      "meanwhile, in a parallel universe, §fact.",
+      "just a daily reminder that §fact.",
+      "I'm coming from the future to tell you that §fact.",
+      "this is absolute truth: §fact.",
+      "you can't deny that §fact.",
+      "you can't disagree with me when I say that §fact.",
+      "according to §char, §fact.",
+      "§char told me that §fact.",
+      "§fact. Crazy, right?"
+    ]
+  },
+  {
+    "handle": "fact",
+    "values": [
+      "§fact, and §fact",
+      "§fact. Also, §fact",
+      "§char is §adj",
+      "§char isn't §adj",
+      "§char wants to §act",
+      "§char doesn't want to §act",
+      "§char needs §item to §act",
+      "§char likes §char",
+      "§char hates §char",
+      "§char is in love with §char",
+      "§char ate §food",
+      "§char drank §drink",
+      "§char owns §item",
+      "§char has §item",
+      "§char found §item",
+      "§char works for §org",
+      "§char should §act",
+      "§org headquarters are located §location",
+      "§char(dio) is Love, §char(dio) is Life"
+    ]
+  },
+  {
+    "handle": "act",
+    "values": [
+      "eat §food",
+      "drink §drink",
+      "kill §char",
+      "kill §char with §weapon",
+      "use §item to §act",
+      "drive §vehicle",
+      "pilot §vehicle",
+      "work for §org",
+      "be contained by the SCP Foundation",
+      "cook §food",
+      "destroy §item",
+      "steal §item",
+      "join §org",
+      "be fired from §org",
+      "die",
+      "sleep",
+      "meet §char",
+      "invade §country",
+      "kill all §group",
+      "find §item"
+    ]
+  },
+  {
+    "handle": "char",
+    "values": [
+      "Hitler",
+      "Stalin",
+      "Putin",
+      "Lenin",
+      "Shrek",
+      "Spongebob",
+      "Dr; Frankenstein",
+      "Frankenstein's monster",
+      "GLaDOS",
+      "Chell",
+      "Wheatley",
+      "the Space core",
+      "the Adventure core",
+      "the Fact core",
+      "Gordon Freeman",
+      "Dr; Isaac Kleiner",
+      "Dr; Breen",
+      "the G-Man",
+      "Dio",
+      "Abradolf Lincler",
+      "the Doctor",
+      "a random guy",
+      "a nazi",
+      "a zombie",
+      "a werewolf",
+      "a vampire",
+      "a headcrab",
+      "a xenomorph",
+      "Gaben",
+      "someone",
+      "SCP-173",
+      "SCP-096",
+      "SCP-106",
+      "SCP-682",
+      "D-§nb§nb§nb§nb"
+    ]
+  },
+  {
+    "handle": "adj",
+    "values": [
+      "beautiful",
+      "ugly",
+      "gay",
+      "stupid",
+      "awesome",
+      "real"
+    ]
+  },
+  {
+    "handle": "item",
+    "values": [
+      "§stuff",
+      "§weapon",
+      "§vehicle"
+    ]
+  },
+  {
+    "handle": "stuff",
+    "values": [
+      "the One Ring to rule them all",
+      "the Holy Bible",
+      "§char's personal diary",
+      "a cup of §drink",
+      "the Elements of Harmony",
+      "a sonic screwdriver",
+      "a flower",
+      "a golden penis",
+      "Meinkampf",
+      "a Twitter account",
+      "a sock",
+      "a pair of socks",
+      "a cooler full of organs",
+      "AIDS",
+      "SCP-294",
+      "SCP-178"
+    ]
+  },
+  {
+    "handle": "weapon",
+    "values": [
+      "a gun",
+      "the Portal Gun",
+      "the Gravity Gun",
+      "a crowbar",
+      "a sword",
+      "a bow",
+      "a M416",
+      "an AK-47",
+      "a Barrett M98B",
+      "a RPG-7",
+      "a Death Note",
+      "a magic wand"
+    ]
+  },
+  {
+    "handle": "vehicle",
+    "values": [
+      "a mecha",
+      "a car",
+      "a plane",
+      "a boat",
+      "a german Panzer IV Ausf; H",
+      "a soviet T-34",
+      "the DeLorean",
+      "the Tardis"
+    ]
+  },
+  {
+    "handle": "food",
+    "values": [
+      "tide pods",
+      "a cake",
+      "§char's roting corpse",
+      "a kebab",
+      "a wiener",
+      "a banana",
+      "cheese",
+      "a rotten fish",
+      "a fish",
+      "a potato",
+      "a tomato",
+      "curry with rice",
+      "chicken",
+      "an apple",
+      "potato knishes"
+    ]
+  },
+  {
+    "handle": "drink",
+    "values": [
+      "bleach",
+      "coke",
+      "vodka",
+      "blood",
+      "§char's blood"
+    ]
+  },
+  {
+    "handle": "org",
+    "values": [
+      "Black Mesa",
+      "the SCP Foundation",
+      "Aperture Science",
+      "the Internet",
+      "the Third Reich",
+      "Overwatch",
+      "Twitter",
+      "Valve",
+      "the Illuminati",
+      "Wayne Enterprise",
+      "the Ku Klux Klan",
+      "the KKK",
+      "Hanza",
+      "the Red Line",
+      "the Fourth Reich",
+      "Polis",
+      "§country's army"
+    ]
+  },
+  {
+    "handle": "country",
+    "values": [
+      "France",
+      "the United Kingdom",
+      "the United States",
+      "Germany",
+      "Nazi Germany",
+      "North Korea",
+      "Japan",
+      "China",
+      "India",
+      "Russia",
+      "the USRR",
+      "Poland",
+      "South Korea",
+      "Uganda"
+    ]
+  },
+  {
+    "handle": "group",
+    "values": [
+      "black people",
+      "ghouls",
+      "vampires",
+      "werewolves",
+      "white people",
+      "dead people",
+      "zombies",
+      "children",
+      "dogs",
+      "cats",
+      "animals",
+      "birds",
+      "squirrels",
+      "jews",
+      "the employees of §org",
+      "nazis",
+      "the Dark Ones",
+      "bronies",
+      "furries",
+      "immigrants from §country"
+    ]
+  },
+  {
+    "handle": "location",
+    "values": [
+      "in a pineapple under the sea",
+      "in my swamp",
+      "in my ass",
+      "in Hogwarts",
+      "on Jupiter",
+      "under your bed",
+      "in the Wayne manor",
+      "in §org headquarters",
+      "inside my car battery",
+      "on Mercury",
+      "next to Trump's wall",
+      "in the ISS",
+      "behind you",
+      "in §country",
+      "in §town",
+      "in the metro"
+    ]
+  },
+  {
+    "handle": "town",
+    "values": [
+      "Paris",
+      "London",
+      "Tokyo",
+      "New York",
+      "San Francisco",
+      "Dublin",
+      "Berlin",
+      "Auschwitz",
+      "Moscow",
+      "Ponyville",
+      "Canterlot"
+    ]
+  },
+  {
+    "handle": "nb",
+    "values": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9"
+    ]
+  }
+]

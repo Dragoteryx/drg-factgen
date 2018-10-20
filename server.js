@@ -2,16 +2,16 @@
 
 require("dotenv").config();
 const express = require("express");
-const bodyParser = require("body-parser");
 const cp = require("child_process");
 const fs = require("fs");
 const facts = require("./src/facts.js");
+let nbChilds = 0;
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
   res.writeHead(301, {Location: "/generate"});
   res.end();
 });
@@ -29,46 +29,41 @@ app.get("/favicon.ico", async (req, res) => {
   });
 });
 
-app.get("/generate", async (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
-  res.end(JSON.stringify(facts.generate()));
-});
-
-app.get("/generate/:includes", async (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
-  let child = cp.fork("./src/find.js");
-  child.on("message", found => {
-    res.end(JSON.stringify(found));
-    child.kill();
+function generate(res, options = {}) {
+  return new Promise((resolve, reject) => {
+    try {
+      let child = cp.fork("./src/generate.js");
+      nbChilds++;
+      child.on("message", found => {
+        resolve(found);
+        child.kill();
+      });
+      child.on("close", () => {
+        console.log("[INFO] Child killed\n");
+        nbChilds--;
+      });
+      child.on("error", reject);
+      child.send(options);
+    } catch(err) {
+      reject(err);
+    }
   });
-  child.on("close", () => {
-    console.log("Find child killed");
-  });
-  child.send(req.params.includes);
-});
-
-function bulk(nb, res) {
-  let child = cp.fork("./src/bulk.js");
-  child.on("message", bulk => {
-    res.end(JSON.stringify(bulk));
-    child.kill();
-  });
-  child.on("close", () => {
-    console.log("Bulk child killed");
-  });
-  child.send(nb);
 }
 
-app.get("/bulk", (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
-  bulk(100, res);
-});
-
-app.get("/bulk/:nb", (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
-  let nb = Number(req.params.nb);
-  if (isNaN(nb) || nb < 0) nb = 0;
-  bulk(nb, res);
+app.get("/generate", async (req, res) => {
+  try {
+    let facts = await generate(res, {
+      nb: req.query.nb,
+      words: req.query.words ? req.query.words.split("_") : [],
+      length: req.query.length
+    });
+    res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
+    res.end(JSON.stringify(facts));
+  } catch(err) {
+    console.error(err);
+    res.writeHead(500, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
+    res.end("{}");
+  }
 });
 
 app.get("/database", (req, res) => {
@@ -78,9 +73,9 @@ app.get("/database", (req, res) => {
 
 app.use((req, res) => {
   res.writeHead(404, {"Content-Type": "application/json"});
-  res.end(JSON.stringify({}));
+  res.end("{}");
 });
 
 app.listen(process.env.PORT, () => {
-  console.log("Web server listening on port " + process.env.PORT + ".");
+  console.log("[INFO] Web server listening on port " + process.env.PORT + ".");
 });
