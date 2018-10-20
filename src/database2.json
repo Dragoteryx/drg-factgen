@@ -43,7 +43,7 @@
       "§char should §act",
       "§org headquarters are located §location",
       "§char(charlovelife) is love, §char(charlovelife) is life",
-      "§stuff costs §cost"
+      "§stuff costs §currency"
     ]
   },
   {
@@ -158,7 +158,7 @@
       "§stuff",
       "§weapon",
       "§vehicle",
-      "§cost"
+      "§currency"
     ]
   },
   {
@@ -184,7 +184,7 @@
     ]
   },
   {
-    "handle": "cost",
+    "handle": "currency",
     "values": [
       "§[2-35] bullets",
       "$§[0-100000]",
