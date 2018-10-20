@@ -42,7 +42,8 @@
       "§char works for §org",
       "§char should §act",
       "§org headquarters are located §location",
-      "§char(charlovelife) is love, §char(charlovelife) is life"
+      "§char(charlovelife) is love, §char(charlovelife) is life",
+      "§stuff costs §cost"
     ]
   },
   {
@@ -156,7 +157,8 @@
     "values": [
       "§stuff",
       "§weapon",
-      "§vehicle"
+      "§vehicle",
+      "§cost"
     ]
   },
   {
@@ -178,9 +180,16 @@
       "AIDS",
       "SCP-294",
       "SCP-178",
-      "the Graal",
+      "the Graal"
+    ]
+  },
+  {
+    "handle": "cost",
+    "values": [
       "§[2-35] bullets",
-      "§[2-100000]$"
+      "§$[0-100000]",
+      "§£[0-100000]",
+      "§[0-100000]€"
     ]
   },
   {
