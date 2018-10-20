@@ -29,6 +29,11 @@ app.get("/favicon.ico", async (req, res) => {
   });
 });
 
+app.get("/ping", async (req, res) => {
+  res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
+  res.end(JSON.stringify({pong: true}));
+});
+
 function generate(res, options = {}) {
   return new Promise((resolve, reject) => {
     try {
@@ -70,7 +75,7 @@ app.get("/generate", async (req, res) => {
 });
 
 app.get("/database", (req, res) => {
-  res.writeHead(200, {"Content-Type": "application/json"});
+  res.writeHead(200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
   res.end(JSON.stringify(facts.database));
 });
 
