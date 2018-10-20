@@ -4,17 +4,23 @@ for (let each of database) {
   proofReading.length = 0;
   for (let val of each.values) {
     if (proofReading.includes(val))
-      console.log("[PROOFREAD] " + val + " is included more than once in §" + each.handle + "!");
+      console.log(val + " is included more than once in §" + each.handle + "!");
     else proofReading.push(val);
   }
+}
+
+class Template {
+  constructor(regexp, func) {
+    this.regexp = regexp;
+    this.func = func;
+  }
+
 }
 
 function generate(options = {}) {
   if (options.text === undefined) options.text = "§start";
   if (options.words === undefined) options.words = [];
   if (options.length === undefined) options.length = Infinity;
-  let regAlias = new RegExp("§[a-z]+[(][a-z]+[)]", "gi");
-  let regNormal = new RegExp("§[a-z]+", "gi");
   let picked = {text: null, steps: [], missing: options.words};
   let nb = 0;
 
@@ -26,8 +32,21 @@ function generate(options = {}) {
     let words = options.words.map(val => val);
     let vars = {};
 
+    // generate fact
     while (text.includes("§")) {
-      let aliases = text.match(regAlias);
+      let before = text;
+      let numbers = text.match(/§\[[0-9]+-[0-9]+]/gi);
+      if (numbers) {
+        for (let val of numbers) {
+          let parts = val.match(/[0-9]+/gi);
+          parts = parts.map(val => Number(val));
+          while (text.includes(val)) {
+            text = text.replace(val, Math.floor(Math.random()*(parts[1]-parts[0]+1))+parts[0]);
+            steps.push(text);
+          }
+        }
+      }
+      let aliases = text.match(/§[a-z]+\([a-z]+\)/gi);
       if (aliases) {
         for (let val of aliases) {
           let parts = val.split("(");
@@ -46,7 +65,7 @@ function generate(options = {}) {
           }
         }
       }
-      let normals = text.match(regNormal);
+      let normals = text.match(/§[a-z]+/gi);
       if (normals) {
         for (let val of normals) {
           let handle = val.replace("§", "");
@@ -62,6 +81,7 @@ function generate(options = {}) {
           }
         }
       }
+      if (before == text) break;
     }
 
     // remove excess ands

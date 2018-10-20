@@ -17,4 +17,4 @@ process.on("message", (options = {}) => {
   process.send({facts: array});
 });
 
-console.log("\n[INFO] Child ready!");
+console.log("Child ready! (" + process.pid + ")");

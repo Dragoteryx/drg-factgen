@@ -39,7 +39,7 @@ function generate(res, options = {}) {
         child.kill();
       });
       child.on("close", () => {
-        console.log("[INFO] Child killed\n");
+        console.log("Child killed. (" + child.pid + ")\n");
         nbChilds--;
       });
       child.on("error", reject);
@@ -52,6 +52,7 @@ function generate(res, options = {}) {
 
 app.get("/generate", async (req, res) => {
   try {
+    console.log("\nCreate basic Generate child.");
     let facts = await generate(res, {
       nb: req.query.nb,
       words: req.query.words ? req.query.words.split("_") : [],
@@ -77,5 +78,5 @@ app.use((req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log("[INFO] Web server listening on port " + process.env.PORT + ".");
+  console.log("Web server listening on port " + process.env.PORT + ".");
 });

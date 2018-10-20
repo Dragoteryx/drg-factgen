@@ -42,7 +42,7 @@
       "§char works for §org",
       "§char should §act",
       "§org headquarters are located §location",
-      "§char(dio) is Love, §char(dio) is Life"
+      "§char(charlovelife) is love, §char(charlovelife) is life"
     ]
   },
   {
@@ -107,7 +107,34 @@
       "SCP-096",
       "SCP-106",
       "SCP-682",
-      "D-§nb§nb§nb§nb"
+      "D-§[1000-9999]",
+      "a bear",
+      "the Dovahkiin",
+      "a dragon",
+      "Master Chief",
+      "Cortana",
+      "Donald Trump",
+      "Barack Obama",
+      "Hillary Clinton",
+      "Bill Gates",
+      "Steve Jobs",
+      "Elon Musk",
+      "Elon-chan",
+      "Batman",
+      "Superman",
+      "Senpai",
+      "Artyom",
+      "Bourbon",
+      "Rick",
+      "Morty",
+      "Koutarou Tatsumi",
+      "Billy",
+      "a Warframe",
+      "the Lotus",
+      "Ballas",
+      "Ordis",
+      "Alad V",
+      "Salad V"
     ]
   },
   {
@@ -118,7 +145,10 @@
       "gay",
       "stupid",
       "awesome",
-      "real"
+      "real",
+      "§char's friend",
+      "dead",
+      "§char"
     ]
   },
   {
@@ -147,7 +177,10 @@
       "a cooler full of organs",
       "AIDS",
       "SCP-294",
-      "SCP-178"
+      "SCP-178",
+      "the Graal",
+      "§[2-35] bullets",
+      "§[2-100000]$"
     ]
   },
   {
@@ -164,7 +197,8 @@
       "a Barrett M98B",
       "a RPG-7",
       "a Death Note",
-      "a magic wand"
+      "a magic wand",
+      "Bourbon's kalash"
     ]
   },
   {
@@ -177,7 +211,8 @@
       "a german Panzer IV Ausf; H",
       "a soviet T-34",
       "the DeLorean",
-      "the Tardis"
+      "the Tardis",
+      "Rick's car"
     ]
   },
   {
@@ -197,7 +232,8 @@
       "curry with rice",
       "chicken",
       "an apple",
-      "potato knishes"
+      "potato knishes",
+      "doritos"
     ]
   },
   {
@@ -207,7 +243,11 @@
       "coke",
       "vodka",
       "blood",
-      "§char's blood"
+      "§char's blood",
+      "Coca-Cola",
+      "Pepsi",
+      "Dr; Pepper",
+      "Mountain Dew"
     ]
   },
   {
@@ -229,7 +269,13 @@
       "the Red Line",
       "the Fourth Reich",
       "Polis",
-      "§country's army"
+      "§country's army",
+      "Microsoft",
+      "Apple",
+      "the Tenno",
+      "the Orokin",
+      "the Grineer",
+      "the Corpus"
     ]
   },
   {
@@ -309,23 +355,7 @@
       "Berlin",
       "Auschwitz",
       "Moscow",
-      "Ponyville",
-      "Canterlot"
-    ]
-  },
-  {
-    "handle": "nb",
-    "values": [
-      "0",
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9"
+      "Ponyville"
     ]
   }
 ]
