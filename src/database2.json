@@ -43,7 +43,9 @@
       "§char should §act",
       "§org headquarters are located §location",
       "§char(charlovelife) is love, §char(charlovelife) is life",
-      "§stuff costs §currency"
+      "§stuff costs §currency",
+      "§weapon costs §currency",
+      "§vehicle costs §currency"
     ]
   },
   {
